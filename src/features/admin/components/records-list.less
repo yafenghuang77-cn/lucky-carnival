@@ -1,0 +1,38 @@
+.admin-record-head { display: none; }
+.admin-record { display: grid; grid-template-columns: 170px minmax(0, 1fr) 85px; gap: 16px; align-items: center; padding: 25px 0; border-top: 2px solid #f0e5de; }
+.admin-record-user { min-width: 0; display: flex; gap: 12px; align-items: center; }
+.admin-user-avatar { display: flex; align-items: center; justify-content: center; width: 52px; height: 52px; flex-shrink: 0; background: #f7ebe4; color: #a3665d; font-size: 23px; border-radius: 50%; }
+.admin-record-user > view:last-child, .admin-record-user > taro-view-core:last-child { min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+.admin-user-name { color: #493735; font-size: 24px; line-height: 1.5; overflow-wrap: anywhere; }
+.admin-user-id { color: #9c8881; font-size: 18px; }
+.admin-record-prize { display: flex; flex-direction: column; gap: 9px; min-width: 0; color: #51413e; font-size: 24px; line-height: 1.6; }
+.admin-record-time-mobile { font-size: 19px; color: #a08a82; }
+.admin-record-time-desktop { display: none; }
+.admin-record-status { justify-self: end; font-size: 20px; border-radius: 7px; padding: 6px 11px; white-space: nowrap; }
+.admin-record-status--received { color: #54715b; background: #eaf2e9; }
+.admin-record-status--pending { color: #a9702e; background: #fcf0db; }
+.admin-record-empty { display: flex; align-items: center; flex-direction: column; justify-content: center; gap: 15px; padding: 60px 10px; color: #7e6861; font-size: 26px; line-height: 1.6; }
+.admin-record-empty-mark { color: #cbb3a7; font-size: 60px; }
+.admin-record-empty > text:last-child, .admin-record-empty > taro-text-core:last-child { font-size: 22px; color: #9d867e; }
+@media (min-width: 900px) {
+  .admin-record-head, .admin-record { display: grid; grid-template-columns: minmax(200px, 1fr) minmax(250px, 1.5fr) 290px 110px; gap: 20px; }
+  .admin-record-head { padding: 20px 0; font-size: 22px; color: #9a8176; }
+  .admin-record-head text:last-child { text-align: right; }
+  .admin-record-time-mobile { display: none; }
+  .admin-record-time-desktop { display: block; color: #8c746c; font-size: 23px; }
+}
+@media (min-width: 900px) {
+  .admin-record-head, .admin-record { grid-template-columns: minmax(100PX, 1fr) minmax(140PX, 1.3fr) 135PX 65PX; gap: 12PX; }
+  .admin-record-head { padding: 12PX 0; font-size: 11PX; }
+  .admin-record { padding: 13PX 0; }
+  .admin-record-user { gap: 8PX; }
+  .admin-user-avatar { width: 32PX; height: 32PX; font-size: 14PX; }
+  .admin-user-name { font-size: 13PX; }
+  .admin-user-id { font-size: 10PX; }
+  .admin-record-prize { font-size: 13PX; }
+  .admin-record-time-desktop { font-size: 12PX; }
+  .admin-record-status { font-size: 11PX; padding: 4PX 7PX; border-radius: 5PX; }
+  .admin-record-empty { padding: 45PX 10PX; gap: 10PX; font-size: 16PX; }
+  .admin-record-empty-mark { font-size: 40PX; }
+  .admin-record-empty > text:last-child, .admin-record-empty > taro-text-core:last-child { font-size: 12PX; }
+}

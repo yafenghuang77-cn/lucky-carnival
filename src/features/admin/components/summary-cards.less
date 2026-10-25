@@ -1,0 +1,22 @@
+.admin-summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-bottom: 28px; }
+.admin-summary-card { position: relative; overflow: hidden; padding: 26px; background: #fffdfa; border: 2px solid #eaded6; border-radius: 20px; }
+.admin-summary-label { display: block; color: #766662; font-size: 24px; }
+.admin-summary-value { display: flex; align-items: baseline; gap: 10px; margin: 10px 0; font-variant-numeric: tabular-nums; }
+.admin-summary-value text:first-child { color: #292526; font-family: 'Arial', sans-serif; font-weight: 800; font-size: 64px; line-height: 1.2; }
+.admin-summary-value text:last-child { color: #8c7772; font-size: 23px; }
+.admin-summary-hint { color: #9a8580; font-size: 19px; }
+.admin-summary-card--primary { background: #e4002b; border-color: #e4002b; }
+.admin-summary-card--primary .admin-summary-label, .admin-summary-card--primary .admin-summary-hint, .admin-summary-card--primary .admin-summary-value text:last-child { color: #ffe0e5; }
+.admin-summary-card--primary .admin-summary-value text:first-child { color: #fffaf2; }
+.admin-summary-flower { position: absolute; bottom: 18px; right: -22px; font-size: 140px; line-height: 1; color: rgba(255, 237, 220, 0.15); transform: rotate(15deg); }
+@media (min-width: 900px) { .admin-summary { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 900px) {
+  .admin-summary { gap: 16PX; margin-bottom: 20PX; }
+  .admin-summary-card { padding: 20PX; border-radius: 14PX; }
+  .admin-summary-label { font-size: 14PX; }
+  .admin-summary-value { gap: 7PX; margin: 10PX 0; }
+  .admin-summary-value text:first-child { font-size: 38PX; }
+  .admin-summary-value text:last-child { font-size: 13PX; }
+  .admin-summary-hint { font-size: 11PX; }
+  .admin-summary-flower { font-size: 100PX; }
+}

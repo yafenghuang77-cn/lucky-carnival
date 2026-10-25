@@ -1,0 +1,89 @@
+.admin-page { min-height: 100vh; background: #f7f3ee; color: #292526; }
+.admin-topbar { display: flex; justify-content: space-between; align-items: center; gap: 15px; padding: 20px 32px; background: #fffdf9; border-bottom: 2px solid #eaddd4; }
+.admin-topbar-brand { display: flex; align-items: center; gap: 13px; font-size: 25px; font-weight: 700; white-space: nowrap; }
+.admin-topbar-separator { font-weight: 400; color: #cbb6ac; }
+.admin-topbar-location { color: #8d736b; font-size: 22px; font-weight: 400; }
+.admin-exit-button { display: flex; align-items: center; gap: 10px; min-height: 88px; margin: -10px 0; padding: 5px 0 5px 15px; background: transparent; color: #aa253b; font-size: 22px; white-space: nowrap; }
+.admin-main { max-width: 2400px; margin: 0 auto; padding: 36px 28px calc(40px + env(safe-area-inset-bottom, 0px)); }
+.admin-title-row { margin-bottom: 30px; display: flex; flex-direction: column; gap: 22px; }
+.admin-eyebrow { font-size: 18px; letter-spacing: 3px; color: #aa8076; }
+.admin-page-title { display: block; margin-top: 15px; font-size: 43px; font-weight: 800; line-height: 1.4; }
+.admin-page-description { display: block; color: #8c736a; font-size: 24px; margin-top: 12px; line-height: 1.7; }
+.admin-preview-badge { display: flex; align-items: center; align-self: flex-start; gap: 9px; font-size: 20px; color: #a35e45; padding: 9px 16px; border-radius: 8px; background: #f5e4d6; }
+.admin-preview-badge > view, .admin-preview-badge > taro-view-core { width: 9px; height: 9px; border-radius: 50%; background: #b67a52; }
+.admin-date-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 24px; }
+.admin-date-toolbar > view:first-child, .admin-date-toolbar > taro-view-core:first-child { display: flex; align-items: center; gap: 14px; }
+.admin-date-label { color: #8a7169; font-size: 22px; }
+.admin-date-picker { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px; min-height: 88px; box-sizing: border-box; background: #fffdf9; border: 2px solid #e7d8cf; border-radius: 12px; color: #50403a; font-size: 25px; font-variant-numeric: tabular-nums; }
+.admin-date-picker text:last-child { color: #af8f80; }
+.admin-date-shortcuts { display: flex; gap: 6px; }
+.admin-date-shortcut { background: transparent; color: #977e73; padding: 15px 10px; margin: 0; min-height: 88px; font-size: 21px; border-radius: 9px; }
+.admin-date-shortcut--active { color: #b21b34; font-weight: 700; background: #fbe6e2; }
+.admin-content-grid { display: flex; flex-direction: column; gap: 26px; }
+.admin-panel { padding: 28px; background: #fffdfa; border: 2px solid #eaded6; border-radius: 22px; min-width: 0; }
+.admin-panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.admin-panel-title { display: block; font-size: 29px; color: #463633; font-weight: 700; line-height: 1.5; }
+.admin-panel-subtitle { display: block; margin-top: 10px; font-size: 20px; color: #9f8377; line-height: 1.7; }
+.admin-panel-meta { font-size: 20px; color: #9f8377; }
+.admin-panel-count { flex-shrink: 0; color: #a07865; background: #f6eee5; padding: 7px 13px; border-radius: 8px; font-size: 21px; }
+.admin-record-filters { display: flex; flex-direction: column; gap: 16px; margin: 25px 0; }
+.admin-filter-tabs { display: flex; gap: 6px; padding: 5px; border-radius: 11px; background: #f5eee8; align-self: flex-start; }
+.admin-filter-tab { min-height: 88px; padding: 12px 23px; margin: 0; border-radius: 8px; font-size: 23px; background: transparent; color: #8a7065; }
+.admin-filter-tab--active { background: #fffdfa; box-shadow: 0 2px 5px rgba(94, 55, 38, 0.08); color: #b41933; font-weight: 700; }
+.admin-search { display: block; width: 100%; height: 88px; min-height: 88px; box-sizing: border-box; border: 2px solid #e9dcd3; border-radius: 11px; padding: 14px 20px; background: #fdf9f5; font-size: 24px; color: #544039; }
+.admin-search input { font-size: inherit; }
+.admin-stats-definition { display: block; padding-top: 15px; color: #9b8175; font-size: 20px; line-height: 1.8; border-top: 2px solid #f0e5de; }
+.admin-preview-explanation { display: flex; flex-direction: column; gap: 10px; margin-top: 28px; border: 2px solid #e7d8ce; border-radius: 14px; background: #f0e7dd; padding: 24px; font-size: 22px; color: #8f7567; line-height: 1.8; }
+.admin-preview-explanation text:first-child { color: #755747; font-size: 24px; font-weight: 700; }
+.admin-footer { display: block; text-align: center; margin-top: 38px; font-size: 18px; letter-spacing: 2px; color: #a99081; line-height: 1.8; }
+@media (min-width: 900px) {
+  .admin-main { padding: 60px 55px; }
+  .admin-title-row { flex-direction: row; align-items: center; justify-content: space-between; }
+  .admin-preview-badge { align-self: center; }
+  .admin-page-title { font-size: 55px; }
+  .admin-date-toolbar { justify-content: flex-start; gap: 32px; }
+  .admin-record-filters { flex-direction: row; align-items: center; justify-content: space-between; }
+  .admin-search { max-width: 560px; }
+  .admin-content-grid { display: grid; grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (min-width: 1200px) {
+  .admin-content-grid { grid-template-columns: minmax(0, 1fr) 640px; align-items: start; }
+}
+
+/* Desktop uses physical pixels so Taro's mobile rem scale does not enlarge the table. */
+@media (min-width: 900px) {
+  .admin-topbar { padding: 12PX 32PX; }
+  .admin-topbar-brand { gap: 10PX; font-size: 18PX; }
+  .admin-topbar-location { font-size: 15PX; }
+  .admin-topbar .admin-brand-stripes { height: 25PX; gap: 4PX; }
+  .admin-topbar .admin-brand-stripes > view, .admin-topbar .admin-brand-stripes > taro-view-core { width: 8PX; }
+  .admin-exit-button { min-height: 44PX; margin: 0; font-size: 14PX; }
+  .admin-main { max-width: 1280PX; padding: 32PX 32PX 40PX; box-sizing: border-box; }
+  .admin-title-row { margin-bottom: 22PX; gap: 20PX; }
+  .admin-eyebrow { font-size: 11PX; letter-spacing: 2PX; }
+  .admin-page-title { font-size: 32PX; margin-top: 12PX; }
+  .admin-page-description { font-size: 14PX; margin-top: 8PX; }
+  .admin-preview-badge { font-size: 12PX; padding: 8PX 12PX; }
+  .admin-date-toolbar { margin-bottom: 20PX; gap: 20PX; }
+  .admin-date-label { font-size: 14PX; }
+  .admin-date-picker { font-size: 15PX; min-height: 44PX; padding: 9PX 14PX; border-radius: 8PX; }
+  .admin-date-shortcut { font-size: 13PX; padding: 8PX 12PX; min-height: 44PX; }
+  .admin-content-grid { gap: 20PX; }
+  .admin-panel { padding: 20PX; border-radius: 14PX; }
+  .admin-panel-title { font-size: 18PX; }
+  .admin-panel-subtitle { font-size: 12PX; margin-top: 6PX; }
+  .admin-panel-meta, .admin-panel-count { font-size: 12PX; }
+  .admin-panel-count { padding: 5PX 8PX; }
+  .admin-record-filters { flex-wrap: wrap; gap: 12PX; margin: 18PX 0; }
+  .admin-filter-tabs { flex-shrink: 0; padding: 3PX; gap: 3PX; border-radius: 7PX; }
+  .admin-filter-tab { white-space: nowrap; min-height: 40PX; padding: 8PX 13PX; font-size: 13PX; border-radius: 5PX; }
+  .admin-search { flex: 1; min-width: 180PX; max-width: 280PX; min-height: 44PX; height: 44PX; font-size: 13PX; padding: 10PX 12PX; border-radius: 7PX; }
+  .admin-stats-definition { font-size: 11PX; padding-top: 12PX; }
+  .admin-preview-explanation { margin-top: 20PX; padding: 14PX 18PX; gap: 5PX; border-radius: 10PX; font-size: 12PX; }
+  .admin-preview-explanation text:first-child { font-size: 13PX; }
+  .admin-footer { font-size: 11PX; margin-top: 25PX; }
+}
+@media (min-width: 1200px) {
+  .admin-content-grid { grid-template-columns: minmax(0, 1fr) 300PX; }
+}

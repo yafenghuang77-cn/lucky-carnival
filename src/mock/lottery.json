@@ -1,0 +1,102 @@
+{
+  "activity": {
+    "id": "act_2026_carnival",
+    "title": "幸运嘉年华",
+    "subtitle": "九宫格抽奖 · iPhone / 红包 / 咖啡券",
+    "tag": "限时活动",
+    "startTime": "2026-10-25",
+    "endTime": "2026-11-11",
+    "remainChances": 1,
+    "totalChances": 1
+  },
+  "prizes": [
+    {
+      "id": "p1",
+      "name": "iPhone 15",
+      "shortName": "iPhone 15",
+      "type": "physical",
+      "iconText": "P",
+      "iconClass": "ic-phone",
+      "stock": 3,
+      "weight": 1
+    },
+    {
+      "id": "p2",
+      "name": "88 元无门槛红包",
+      "shortName": "88 元红包",
+      "type": "redpack",
+      "iconText": "¥",
+      "iconClass": "ic-gold",
+      "stock": 200,
+      "weight": 20
+    },
+    {
+      "id": "p3",
+      "name": "满 100 减 20 券",
+      "shortName": "满减券",
+      "type": "coupon",
+      "iconText": "券",
+      "iconClass": "ic-coupon",
+      "stock": 9999,
+      "weight": 250
+    },
+    {
+      "id": "p4",
+      "name": "星巴克中杯券",
+      "shortName": "咖啡券",
+      "type": "coupon",
+      "iconText": "咖",
+      "iconClass": "ic-coffee",
+      "stock": 500,
+      "weight": 50
+    },
+    {
+      "id": "p5",
+      "name": "50 积分",
+      "shortName": "50 积分",
+      "type": "points",
+      "iconText": "分",
+      "iconClass": "ic-point",
+      "stock": 9999,
+      "weight": 300
+    },
+    {
+      "id": "p6",
+      "name": "谢谢参与",
+      "shortName": "谢谢参与",
+      "type": "thanks",
+      "iconText": "谢",
+      "iconClass": "ic-thanks",
+      "stock": 9999,
+      "weight": 379
+    },
+    {
+      "id": "p7",
+      "name": "6 元红包",
+      "shortName": "6 元红包",
+      "type": "redpack",
+      "iconText": "¥",
+      "iconClass": "ic-gold",
+      "stock": 9999,
+      "weight": 200
+    },
+    {
+      "id": "p8",
+      "name": "免邮券",
+      "shortName": "免邮券",
+      "type": "coupon",
+      "iconText": "券",
+      "iconClass": "ic-coupon",
+      "stock": 9999,
+      "weight": 100
+    }
+  ],
+  "winRecord": {
+    "id": "win_9527",
+    "prizeId": "p2",
+    "prizeName": "88 元无门槛红包",
+    "prizeDesc": "有效期至 2026-11-11\n可在「我的奖品」中查看",
+    "status": "pending",
+    "wonAt": "2026-10-25 14:32:08"
+  }
+}
