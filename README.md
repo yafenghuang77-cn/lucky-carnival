@@ -101,9 +101,13 @@ pnpm typecheck
 pnpm check
 ```
 
-H5 输出到 `dist/h5/`，微信小程序输出到 `dist/weapp/`，两端构建不会互相覆盖。小程序用微信开发者工具打开项目根目录，`project.config.json` 已指向 `dist/weapp/`。新增页面后需重启 H5 预览以更新路由。
+各平台保留独立目录，并在里面按 `TARO_APP_ROUTER_BASENAME` 创建产物子目录。当前值为 `/lucky-carnival`，H5 输出到 `dist/h5/lucky-carnival/`，微信小程序输出到 `dist/weapp/lucky-carnival/`，其他平台同样输出到 `dist/<平台>/lucky-carnival/`。小程序用微信开发者工具打开项目根目录，`project.config.json` 已指向 `dist/weapp/lucky-carnival/`。新增页面后需重启 H5 预览以更新路由。
 
 TypeScript 开启严格模式、未使用变量和参数检查；`skipLibCheck` 跳过 Taro/Webpack 的第三方声明检查，应用代码与构建配置仍参与检查。H5 生产构建存在框架的动态依赖与包体积提示。
+
+H5 发布构建通过 `config/prod.ts` 的 `webpackChain` 提取 `react-vendor`（React、React DOM、scheduler）、`taro-components-vendor`（Taro 组件和 Stencil）及 `common-vendor`，Webpack runtime 也单独输出；保留 Taro 默认分组和页面按需加载。第三方转译排除规则同时识别普通和 pnpm 嵌套路径，跳过已有产物的运行时及补丁包。浏览器兼容范围与 Babel 补丁策略保持原样。
+
+本机同一测试环境构建对比：`app.js` 约从 365 KiB 降至 8.8 KiB，HTML 入口引用的 JS/CSS 总量约从 457.2 KiB 降至 452.7 KiB，逐文件 gzip 后的合计约从 147.2 KiB 降至 145.9 KiB。主要收益是依赖缓存复用，不能把 `app.js` 的减少量当成首屏总下载量的减少；页面异步资源不计入上述入口统计。生产服务器需开启 gzip/Brotli，并为带内容哈希的 JS/CSS 设置长期缓存，HTML 保持可更新。
 
 规范工具依赖已在 `package.json` 声明，执行 `pnpm install` 即可安装。ESLint 覆盖 React、Taro、Hooks、TypeScript/JavaScript、导入与导出排序、Taro 组件无障碍检查及测试文件中的 Jest 规范；Prettier 统一格式与 `package.json` 排序；Stylelint 17 分别检查 CSS 和 Less。以上均接入 `pnpm check` 与提交前检查，Jest 插件仅检查测试代码，不执行测试。详细规则见 [开发约定](CONTRIBUTING.md)。编辑器扩展仅提供推荐列表，由开发者自行安装。
 
@@ -123,9 +127,9 @@ TypeScript 开启严格模式、未使用变量和参数检查；`skipLibCheck` 
 
 Source Map 在 `config/dev.ts` 的 H5、小程序配置中显式开启，方便本地调试；在 `config/prod.ts` 中显式关闭。因此 `build:h5`、`build:weapp` 及其 `:test` 构建均不生成 Source Map，`dev:*:prod` 的生产配置预览也不生成。微信开发者工具配置同时关闭 `uploadWithSourceMap`。
 
-- `TARO_APP_PUBLIC_PATH`：H5 资源部署路径，开发、测试、生产环境均已设为 `/lucky-carnival/`。将 `dist/h5/` 的内容部署到站点的 `/lucky-carnival/` 目录；部署到其他目录时修改此变量，部署到域名根目录时设为 `/`。
-- `TARO_APP_ROUTER_BASENAME`：H5 页面路由前缀，开发、测试、生产环境均已设为 `/lucky-carnival`。当前使用 hash 路由，配合默认资源部署路径和 `customRoutes`，首页地址为 `/lucky-carnival/#/lucky-carnival/index`；设为 `/` 可移除 `#` 后的路由前缀。
-- `TARO_APP_ID`：可按环境覆盖小程序 AppID；不设置时使用根目录 `project.config.json` 中的值。使用环境覆盖的 AppID 时，请在微信开发者工具中导入 `dist/weapp/`，以使用生成配置中的 AppID。
+- `TARO_APP_PUBLIC_PATH`：H5 资源部署路径，开发、测试、生产环境均已设为 `/lucky-carnival/`。将 `dist/h5/lucky-carnival/` 的内容部署到站点的 `/lucky-carnival/` 目录，也可将 `dist/h5/` 作为站点根目录；部署到其他目录时修改此变量，部署到域名根目录时设为 `/`。
+- `TARO_APP_ROUTER_BASENAME`：H5 页面路由前缀，同时决定各平台产物的子目录，开发、测试、生产环境均已设为 `/lucky-carnival`。构建时去掉首尾斜杠，例如 `/campaign/` 对应 `dist/h5/campaign/`、`dist/weapp/campaign/`；多层路径保留对应目录层级，值为 `/` 时子目录回退为 `lucky-carnival`。当前使用 hash 路由，配合默认资源部署路径和 `customRoutes`，首页地址为 `/lucky-carnival/#/lucky-carnival/index`。修改该变量后，根目录小程序配置的 `miniprogramRoot` 也需同步，或直接导入对应的生成目录。
+- `TARO_APP_ID`：可按环境覆盖小程序 AppID；不设置时使用根目录 `project.config.json` 中的值。使用环境覆盖的 AppID 时，请在微信开发者工具中导入 `dist/weapp/lucky-carnival/`（或修改路由前缀后的对应产物目录），以使用生成配置中的 AppID。
 - 个人环境覆盖可写入 `.env.development.local`、`.env.test.local` 或 `.env.production.local`，这些文件已被 Git 忽略。`TARO_APP_` 变量会进入前端构建产物，只配置公开参数，密钥保留在服务端。
 
 例如在 `.env.production.local` 中配置子目录部署：

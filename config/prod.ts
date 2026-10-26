@@ -1,3 +1,5 @@
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin'
+
 import type { UserConfigExport } from '@tarojs/cli'
 
 export default {
@@ -19,38 +21,51 @@ export default {
     },
     compile: {
       include: [
-        // 确保产物为 es5
+        // 转译第三方业务依赖，跳过已编译的运行时和补丁；同时适配 pnpm 的嵌套路径。
         (filename: string) =>
-          /node_modules\/(?!(@babel|core-js|style-loader|css-loader|react|react-dom))/.test(
+          /[\\/]node_modules[\\/]/.test(filename) &&
+          !/[\\/]node_modules[\\/](@babel[\\/]|(?:core-js(?:-pure)?|style-loader|css-loader|react|react-dom)[\\/])/.test(
             filename,
           ),
       ],
     },
-    /**
-     * WebpackChain 插件配置
-     * @docs https://github.com/neutrinojs/webpack-chain
-     */
-    // webpackChain (chain) {
-    //   /**
-    //    * 如果 h5 端编译后体积过大，可以使用 webpack-bundle-analyzer 插件对打包体积进行分析。
-    //    * @docs https://github.com/webpack-contrib/webpack-bundle-analyzer
-    //    */
-    //   chain.plugin('analyzer')
-    //     .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin, [])
-    //   /**
-    //    * 如果 h5 端首屏加载时间过长，可以使用 prerender-spa-plugin 插件预加载首页。
-    //    * @docs https://github.com/chrisvfritz/prerender-spa-plugin
-    //    */
-    //   const path = require('path')
-    //   const Prerender = require('prerender-spa-plugin')
-    //   const staticDir = path.join(__dirname, '..', 'dist', 'h5')
-    //   chain
-    //     .plugin('prerender')
-    //     .use(new Prerender({
-    //       staticDir,
-    //       routes: [ '/pages/index/index' ],
-    //       postProcess: (context) => ({ ...context, outputPath: path.join(staticDir, 'index.html') })
-    //     }))
-    // }
+    webpackChain(chain) {
+      // 环境钩子会覆盖公共钩子，因此保留路径别名解析。
+      chain.resolve.plugin('tsconfig-paths').use(TsconfigPathsPlugin)
+      chain.optimization.runtimeChunk('single')
+
+      const splitChunks = chain.optimization.get('splitChunks')
+      chain.optimization.splitChunks({
+        ...splitChunks,
+        cacheGroups: {
+          // 保留 Taro 默认分组，只提取首屏依赖，避免提前加载异步页面组件。
+          ...splitChunks.cacheGroups,
+          commonVendor: {
+            name: 'common-vendor',
+            test: /[\\/]node_modules[\\/]/,
+            chunks: 'initial',
+            priority: 20,
+            enforce: true,
+            reuseExistingChunk: true,
+          },
+          reactVendor: {
+            name: 'react-vendor',
+            test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
+            chunks: 'initial',
+            priority: 300,
+            enforce: true,
+            reuseExistingChunk: true,
+          },
+          taroComponentsVendor: {
+            name: 'taro-components-vendor',
+            test: /[\\/]node_modules[\\/](@tarojs[\\/]components|@stencil[\\/]core)[\\/]/,
+            chunks: 'initial',
+            priority: 300,
+            enforce: true,
+            reuseExistingChunk: true,
+          },
+        },
+      })
+    },
   },
 } satisfies UserConfigExport<'webpack5'>

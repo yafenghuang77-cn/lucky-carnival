@@ -19,13 +19,13 @@ declare namespace NodeJS {
     TARO_ENV: 'weapp' | 'swan' | 'alipay' | 'h5' | 'rn' | 'tt' | 'qq' | 'jd' | 'harmony' | 'jdrn'
     /**
      * 当前构建的小程序 appid
-     * @description 不同环境可通过 env 文件配置，覆盖 dist/weapp/project.config.json 中的 appid
+     * @description 不同环境可通过 env 文件配置，覆盖 dist/weapp/<路由目录>/project.config.json 中的 appid
      * @see https://taro-docs.jd.com/docs/next/env-mode-config#特殊环境变量-taro_app_id
      */
     TARO_APP_ID?: string
     /** H5 资源部署路径，默认为 /lucky-carnival/ */
     TARO_APP_PUBLIC_PATH?: string
-    /** H5 页面路由前缀，默认为 /lucky-carnival；hash 模式下位于 # 后 */
+    /** H5 页面路由前缀及各平台的产物子目录，默认为 /lucky-carnival */
     TARO_APP_ROUTER_BASENAME?: string
   }
 }

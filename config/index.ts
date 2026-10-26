@@ -9,6 +9,16 @@ import prodConfig from './prod'
 
 // https://taro-docs.jd.com/docs/next/config#defineconfig-辅助函数
 export default defineConfig<'webpack5'>(async (merge, { mode }) => {
+  const outputFolder =
+    (process.env.TARO_APP_ROUTER_BASENAME || '/lucky-carnival').replace(/^\/+|\/+$/g, '') ||
+    'lucky-carnival'
+
+  if (
+    outputFolder.split('/').some((part) => part === '..' || part === '.' || part.includes('\\'))
+  ) {
+    throw new Error('TARO_APP_ROUTER_BASENAME 必须是有效的路由路径，不能包含 .、.. 或反斜杠')
+  }
+
   const baseConfig: UserConfigExport<'webpack5'> = {
     projectName: 'lucky-carnival',
     date: '2026-10-25',
@@ -20,7 +30,7 @@ export default defineConfig<'webpack5'>(async (merge, { mode }) => {
       828: 1.81 / 2,
     },
     sourceRoot: 'src',
-    outputRoot: `dist/${process.env.TARO_ENV}`,
+    outputRoot: path.posix.join('dist', process.env.TARO_ENV, outputFolder),
     plugins: ['@tarojs/plugin-generator'],
     defineConstants: {},
     copy: {
@@ -68,13 +78,13 @@ export default defineConfig<'webpack5'>(async (merge, { mode }) => {
     h5: {
       staticDirectory: 'static',
       output: {
-        filename: 'js/[name].[hash:8].js',
-        chunkFilename: 'js/[name].[chunkhash:8].js',
+        filename: 'js/[name].[contenthash:8].js',
+        chunkFilename: 'js/[name].[contenthash:8].js',
       },
       miniCssExtractPluginOption: {
         ignoreOrder: true,
-        filename: 'css/[name].[hash].css',
-        chunkFilename: 'css/[name].[chunkhash].css',
+        filename: 'css/[name].[contenthash:8].css',
+        chunkFilename: 'css/[name].[contenthash:8].css',
       },
       postcss: {
         autoprefixer: {

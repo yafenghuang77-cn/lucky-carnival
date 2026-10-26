@@ -83,11 +83,12 @@ Stylelint 使用 17.x，CSS 标准配置使用 `stylelint-config-standard` 40.x�
 - 页面和组件的 JSX 统一使用 `@tarojs/components`，禁止原生 HTML 标签；`src/index.html` 仅作为 H5 宿主模板保留。跨端动画使用 `Taro.createAnimation`，通过组件的 `animation` 属性驱动。
 - 事件、计时器和订阅需要在组件销毁时清理。
 - 项目设计宽度为 750，样式尺寸沿用现有 Taro 转换方式，避免混用未经说明的尺寸方案。
-- H5 和微信小程序分别输出到 `dist/h5/`、`dist/weapp/`。小程序根目录配置的 `miniprogramRoot` 需与微信构建目录保持一致。
+- 所有平台输出到 `dist/<平台>/<路由目录>/`，路由目录由 `TARO_APP_ROUTER_BASENAME` 去掉首尾斜杠得到；当前 H5 和微信小程序分别输出到 `dist/h5/lucky-carnival/`、`dist/weapp/lucky-carnival/`。值为 `/` 时目录回退为 `lucky-carnival`。小程序根目录配置的 `miniprogramRoot` 需与微信构建目录保持一致。
 - 环境变量分别放在 `.env.development`、`.env.test`、`.env.production` 中；个人覆盖使用对应的 `.local` 文件。`dev:h5`、`dev:weapp` 启动开发环境，追加 `:test` 调试测试环境，追加 `:prod` 使用生产配置持续预览。启动脚本显式指定 `--env` 和 `--mode`，测试环境启动使用开发构建，`build:h5:test`、`build:weapp:test` 则使用生产压缩配置。同平台不同环境共用输出目录，切换环境前先停止当前进程，切换后会覆盖该平台产物。
 - H5 子目录部署通过 `TARO_APP_PUBLIC_PATH` 设置资源路径，页面路由前缀通过 `TARO_APP_ROUTER_BASENAME` 配置；当前使用 hash 路由，路由前缀位于 `#` 后。公开环境变量和 AppID 的覆盖方式见 README 的「环境与部署配置」。
 - H5 的 `publicPath` 和 `router` 分别在 `config/dev.ts`、`config/prod.ts` 中配置，`config/index.ts` 保留共用的打包与样式配置。新增页面时同步维护两个环境的 `h5.router.customRoutes`；每个数组第一项为默认短路径，第二项保留原页面地址。业务跳转继续使用原始页面路径，由 Taro 完成 H5 路径映射。
 - H5 和小程序的 `enableSourceMap` 在 `config/dev.ts` 中开启，在 `config/prod.ts` 中关闭。所有发布构建（含测试环境）均不生成 Source Map，小程序的 `uploadWithSourceMap` 保持关闭。
+- H5 发布构建在 `config/prod.ts` 中按首屏依赖提取 React、Taro 组件与通用 vendor，并单独输出 runtime。维护 `splitChunks` 时保留 Taro 默认分组，不把页面异步依赖提前合并进入口；环境 `webpackChain` 需保留 `@/` 别名解析。转译排除规则需匹配 pnpm 嵌套路径，避免再次转译运行时及补丁包。
 - Webpack 持久化缓存按构建方式、平台、环境模式隔离；新增影响构建的配置文件时，同步维护 `config/index.ts` 的 `cache.buildDependencies`。
 
 ## ESLint 与导入顺序
