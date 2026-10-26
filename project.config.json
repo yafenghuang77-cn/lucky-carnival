@@ -1,5 +1,5 @@
 {
-  "miniprogramRoot": "dist/",
+  "miniprogramRoot": "dist/weapp/",
   "projectname": "lucky-carnival",
   "description": "幸运嘉年华",
   "appid": "wx93327b6369bb9752",

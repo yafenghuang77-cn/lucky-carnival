@@ -73,12 +73,16 @@ pnpm dev:h5
 pnpm dev:weapp
 ```
 
-H5 本地预览通常为 `http://localhost:10086`：
+H5 本地预览通常为 `http://localhost:10086/lucky-carnival/#/lucky-carnival/index`：
 
-- `/#/pages/index/index`：活动入口
-- `/#/pages/lottery/index`：抽奖页，可直接预览中奖弹窗
-- `/#/pages/prizes/index`：我的奖品及奖券样式示例
-- `/#/pages/admin/index`：管理登录与统计 UI 预览
+- `/lucky-carnival/#/lucky-carnival/index`：活动入口
+- `/lucky-carnival/#/lucky-carnival/lottery`：抽奖页，可直接预览中奖弹窗
+- `/lucky-carnival/#/lucky-carnival/prizes`：我的奖品及奖券样式示例
+- `/lucky-carnival/#/lucky-carnival/admin`：管理登录与统计 UI 预览
+
+`h5.router.customRoutes` 为四个页面配置了上述短路径，数组中的第一项作为默认跳转地址，同时保留 `/pages/index/index` 等原路径用于兼容已有链接。业务代码的 `Taro.navigateTo` 等调用继续使用 `src/app.config.ts` 中的原始页面路径，H5 自动映射为短路径，小程序路径保持一致。
+
+局域网访问时将 `localhost` 替换为开发机 IP，例如 `http://192.168.31.54:10086/lucky-carnival/#/lucky-carnival/index`。修改 `config/` 或 `.env` 后需重启 `pnpm dev:h5` 才会加载新配置。Taro 启动日志显示的是服务器根地址，请访问 `/lucky-carnival/` 目录；页面路由前缀在浏览器进入页面后体现在 `#` 后。
 
 ```sh
 pnpm build:h5
@@ -87,8 +91,35 @@ pnpm typecheck
 pnpm check
 ```
 
-两个平台默认输出到 `dist/`，请顺序构建。小程序用微信开发者工具打开项目根目录。新增页面后需重启 H5 预览以更新路由。
+H5 输出到 `dist/h5/`，微信小程序输出到 `dist/weapp/`，两端构建不会互相覆盖。小程序用微信开发者工具打开项目根目录，`project.config.json` 已指向 `dist/weapp/`。新增页面后需重启 H5 预览以更新路由。
 
 TypeScript 开启严格模式、未使用变量和参数检查；`skipLibCheck` 跳过 Taro/Webpack 的第三方声明检查，应用代码与构建配置仍参与检查。H5 生产构建存在框架的动态依赖与包体积提示。
 
 规范工具依赖已在 `package.json` 声明，执行 `pnpm install` 即可安装。ESLint 覆盖 React、Taro、Hooks、TypeScript/JavaScript、导入与导出排序、Taro 组件无障碍检查及测试文件中的 Jest 规范；Prettier 统一格式与 `package.json` 排序；Stylelint 17 分别检查 CSS 和 Less。以上均接入 `pnpm check` 与提交前检查，Jest 插件仅检查测试代码，不执行测试。详细规则见 [开发约定](CONTRIBUTING.md)。编辑器扩展仅提供推荐列表，由开发者自行安装。
+
+## 环境与部署配置
+
+`config/index.ts` 保留共用的打包、样式和路径别名配置。H5 的 `publicPath`、`router.mode`、`router.basename` 和 `router.customRoutes` 分别在 `config/dev.ts`、`config/prod.ts` 中配置，开发与生产环境可以独立调整；默认访问路径保持一致。
+
+| 命令                                           | 环境文件           | 构建方式                   |
+| ---------------------------------------------- | ------------------ | -------------------------- |
+| `pnpm dev:h5` / `pnpm dev:weapp`               | `.env.development` | 开发模式，监听文件变化     |
+| `pnpm build:h5:test` / `pnpm build:weapp:test` | `.env.test`        | 生产模式，使用测试环境变量 |
+| `pnpm build:h5` / `pnpm build:weapp`           | `.env.production`  | 生产模式，使用生产环境变量 |
+
+`--mode test` 只选择环境变量文件，不将 `NODE_ENV` 改为 `test`；测试环境仍使用 `config/prod.ts` 的压缩配置。不同环境的同平台构建共用输出目录，切换环境后会覆盖该平台的产物。
+
+- `TARO_APP_PUBLIC_PATH`：H5 资源部署路径，开发、测试、生产环境均已设为 `/lucky-carnival/`。将 `dist/h5/` 的内容部署到站点的 `/lucky-carnival/` 目录；部署到其他目录时修改此变量，部署到域名根目录时设为 `/`。
+- `TARO_APP_ROUTER_BASENAME`：H5 页面路由前缀，开发、测试、生产环境均已设为 `/lucky-carnival`。当前使用 hash 路由，配合默认资源部署路径和 `customRoutes`，首页地址为 `/lucky-carnival/#/lucky-carnival/index`；设为 `/` 可移除 `#` 后的路由前缀。
+- `TARO_APP_ID`：可按环境覆盖小程序 AppID；不设置时使用根目录 `project.config.json` 中的值。使用环境覆盖的 AppID 时，请在微信开发者工具中导入 `dist/weapp/`，以使用生成配置中的 AppID。
+- 个人环境覆盖可写入 `.env.development.local`、`.env.test.local` 或 `.env.production.local`，这些文件已被 Git 忽略。`TARO_APP_` 变量会进入前端构建产物，只配置公开参数，密钥保留在服务端。
+
+例如在 `.env.production.local` 中配置子目录部署：
+
+```dotenv
+TARO_APP_PUBLIC_PATH="/carnival/"
+```
+
+Webpack 已开启持久化缓存，并按构建方式、平台和环境模式隔离；构建配置、环境文件、Babel 配置和 TypeScript 配置变更会使对应缓存失效。需要手动重建缓存时，删除 `node_modules/.cache/webpack/` 后重新构建。
+
+当前 Taro H5 组件中的一个模块存在 `NullDependency` 无法序列化的缓存提示，该模块会重新编译，其他模块仍正常缓存；此提示不影响构建产物。

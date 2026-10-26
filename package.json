@@ -7,6 +7,7 @@
   "scripts": {
     "build:alipay": "taro build --type alipay",
     "build:h5": "taro build --type h5",
+    "build:h5:test": "taro build --type h5 --mode test",
     "build:harmony-hybrid": "taro build --type harmony-hybrid",
     "build:jd": "taro build --type jd",
     "build:qq": "taro build --type qq",
@@ -14,6 +15,7 @@
     "build:swan": "taro build --type swan",
     "build:tt": "taro build --type tt",
     "build:weapp": "taro build --type weapp",
+    "build:weapp:test": "taro build --type weapp --mode test",
     "check": "pnpm format:check && pnpm lint && pnpm lint:style && pnpm typecheck",
     "check:staged": "lint-staged",
     "dev:alipay": "npm run build:alipay -- --watch",

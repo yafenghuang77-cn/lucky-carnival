@@ -1,3 +1,6 @@
+import { existsSync } from 'node:fs'
+import path from 'node:path'
+
 import { defineConfig, type UserConfigExport } from '@tarojs/cli'
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin'
 
@@ -5,7 +8,7 @@ import devConfig from './dev'
 import prodConfig from './prod'
 
 // https://taro-docs.jd.com/docs/next/config#defineconfig-辅助函数
-export default defineConfig<'webpack5'>(async (merge) => {
+export default defineConfig<'webpack5'>(async (merge, { mode }) => {
   const baseConfig: UserConfigExport<'webpack5'> = {
     projectName: 'lucky-carnival',
     date: '2026-10-25',
@@ -17,7 +20,7 @@ export default defineConfig<'webpack5'>(async (merge) => {
       828: 1.81 / 2,
     },
     sourceRoot: 'src',
-    outputRoot: 'dist',
+    outputRoot: `dist/${process.env.TARO_ENV}`,
     plugins: ['@tarojs/plugin-generator'],
     defineConstants: {},
     copy: {
@@ -27,7 +30,22 @@ export default defineConfig<'webpack5'>(async (merge) => {
     framework: 'react',
     compiler: 'webpack5',
     cache: {
-      enable: false, // Webpack 持久化缓存配置，建议开启。默认配置请参考：https://docs.taro.zone/docs/config-detail#cache
+      enable: true,
+      name: `${process.env.NODE_ENV}-${process.env.TARO_ENV}-${mode}`,
+      buildDependencies: {
+        config: ['index.ts', 'dev.ts', 'prod.ts'].map((file) => path.resolve(__dirname, file)),
+        files: [
+          'package.json',
+          'tsconfig.json',
+          'babel.config.js',
+          '.env',
+          '.env.local',
+          `.env.${mode}`,
+          `.env.${mode}.local`,
+        ]
+          .map((file) => path.resolve(__dirname, '..', file))
+          .filter((file) => existsSync(file)),
+      },
     },
     mini: {
       postcss: {
@@ -48,7 +66,6 @@ export default defineConfig<'webpack5'>(async (merge) => {
       },
     },
     h5: {
-      publicPath: '/',
       staticDirectory: 'static',
       output: {
         filename: 'js/[name].[hash:8].js',
