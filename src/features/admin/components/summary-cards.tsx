@@ -1,6 +1,7 @@
 import { Text, View } from '@tarojs/components'
 
 import type { DailyPrizeStats } from '@/types/redemption'
+
 import './summary-cards.less'
 
 export default function SummaryCards({ summary }: { summary: DailyPrizeStats['summary'] }) {

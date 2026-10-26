@@ -6,16 +6,28 @@ import PrizeArt from '@/components/prize-art'
 import { formatTime, shanghaiTime } from '@/utils/date'
 
 import type { PrizeVoucher } from '@/types/redemption'
+
 import './voucher-card.less'
 
 type Props = { voucher: PrizeVoucher; example?: boolean }
 
-export const voucherStatus = (voucher: PrizeVoucher) =>
-  voucher.status === 'claimed'
-    ? 'claimed'
-    : shanghaiTime(voucher.expiresAt).isBefore(shanghaiTime())
-      ? 'expired'
-      : 'pending'
+export function voucherStatus(voucher: PrizeVoucher) {
+  if (voucher.status === 'claimed' || voucher.status === 'expired') {
+    return voucher.status
+  }
+  const expiresAt = shanghaiTime(voucher.expiresAt)
+  if (!expiresAt.isValid()) {
+    return 'invalid'
+  }
+  return expiresAt.isBefore(shanghaiTime()) ? 'expired' : 'pending'
+}
+
+const STATUS_LABELS = {
+  claimed: '已领取',
+  expired: '已过期',
+  pending: '待领取',
+  invalid: '有效期异常',
+}
 
 export default function VoucherCard({ voucher, example }: Props) {
   const status = voucherStatus(voucher)
@@ -30,9 +42,7 @@ export default function VoucherCard({ voucher, example }: Props) {
           <Text className='voucher-date'>中奖时间 {formatTime(voucher.wonAt)}</Text>
           <Text className='voucher-date'>有效期至 {formatTime(voucher.expiresAt)}</Text>
         </View>
-        <Text className={`voucher-status voucher-status--${status}`}>
-          {status === 'claimed' ? '已领取' : status === 'expired' ? '已过期' : '待领取'}
-        </Text>
+        <Text className={`voucher-status voucher-status--${status}`}>{STATUS_LABELS[status]}</Text>
       </View>
       <View className='voucher-card-code'>
         <View className='voucher-code-details'>

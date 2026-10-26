@@ -12,8 +12,7 @@ export default function useTaroAnimation() {
     instance.current ??= createAnimation({ timingFunction: 'ease-out' })
     const reduceMotion =
       process.env.TARO_ENV === 'h5' &&
-      typeof window.matchMedia === 'function' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      (window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false)
     setAnimation(
       configure(instance.current)
         .step({ duration: reduceMotion ? 0 : duration })

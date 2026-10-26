@@ -3,45 +3,37 @@
   "version": "1.0.0",
   "private": true,
   "description": "幸运嘉年华",
-  "engines": {
-    "node": ">=24.0.0 <25.0.0"
-  },
-  "templateInfo": {
-    "name": "default",
-    "typescript": true,
-    "css": "Less",
-    "framework": "React"
-  },
+  "author": "",
   "scripts": {
-    "prepare": "husky",
+    "build:alipay": "taro build --type alipay",
+    "build:h5": "taro build --type h5",
+    "build:harmony-hybrid": "taro build --type harmony-hybrid",
+    "build:jd": "taro build --type jd",
+    "build:qq": "taro build --type qq",
+    "build:rn": "taro build --type rn",
+    "build:swan": "taro build --type swan",
+    "build:tt": "taro build --type tt",
+    "build:weapp": "taro build --type weapp",
+    "check": "pnpm format:check && pnpm lint && pnpm lint:style && pnpm typecheck",
+    "check:staged": "lint-staged",
+    "dev:alipay": "npm run build:alipay -- --watch",
+    "dev:h5": "npm run build:h5 -- --watch",
+    "dev:harmony-hybrid": "npm run build:harmony-hybrid -- --watch",
+    "dev:jd": "npm run build:jd -- --watch",
+    "dev:qq": "npm run build:qq -- --watch",
+    "dev:rn": "npm run build:rn -- --watch",
+    "dev:swan": "npm run build:swan -- --watch",
+    "dev:tt": "npm run build:tt -- --watch",
+    "dev:weapp": "npm run build:weapp -- --watch",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.cjs,.mjs --max-warnings 0",
     "lint:fix": "pnpm lint --fix",
     "lint:style": "stylelint \"src/**/*.{css,less}\" --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "typecheck": "tsc --noEmit",
-    "check": "pnpm format:check && pnpm lint && pnpm lint:style && pnpm typecheck",
-    "check:staged": "lint-staged",
     "new": "taro new",
-    "build:weapp": "taro build --type weapp",
-    "dev:weapp": "npm run build:weapp -- --watch",
-    "build:swan": "taro build --type swan",
-    "dev:swan": "npm run build:swan -- --watch",
-    "build:alipay": "taro build --type alipay",
-    "dev:alipay": "npm run build:alipay -- --watch",
-    "build:tt": "taro build --type tt",
-    "dev:tt": "npm run build:tt -- --watch",
-    "build:h5": "taro build --type h5",
-    "dev:h5": "npm run build:h5 -- --watch",
-    "build:rn": "taro build --type rn",
-    "dev:rn": "npm run build:rn -- --watch",
-    "build:qq": "taro build --type qq",
-    "dev:qq": "npm run build:qq -- --watch",
-    "build:jd": "taro build --type jd",
-    "dev:jd": "npm run build:jd -- --watch",
-    "build:harmony-hybrid": "taro build --type harmony-hybrid",
-    "dev:harmony-hybrid": "npm run build:harmony-hybrid -- --watch"
+    "prepare": "husky",
+    "typecheck": "tsc --noEmit"
   },
   "browserslist": {
     "development": [
@@ -54,7 +46,6 @@
       "ios >= 8"
     ]
   },
-  "author": "",
   "dependencies": {
     "@babel/runtime": "^7.24.4",
     "@tarojs/components": "4.3.1",
@@ -72,9 +63,13 @@
     "@tarojs/runtime": "4.3.1",
     "@tarojs/shared": "4.3.1",
     "@tarojs/taro": "4.3.1",
+    "ahooks": "^3.10.0",
     "dayjs": "^1.11.23",
+    "es-toolkit": "^1.53.0",
+    "radash": "^12.1.1",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@babel/core": "^7.24.4",
@@ -99,19 +94,33 @@
     "eslint-config-taro": "4.3.1",
     "eslint-import-resolver-typescript": "^4.4.5",
     "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jest": "^29.17.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.4.0",
+    "eslint-plugin-simple-import-sort": "^14.0.0",
     "husky": "^9.1.7",
     "less": "^4.2.0",
     "lint-staged": "^16.1.2",
     "postcss": "^8.5.6",
     "postcss-less": "^6.0.0",
     "prettier": "^3.9.10",
+    "prettier-plugin-packagejson": "^3.0.2",
     "react-refresh": "^0.14.0",
-    "stylelint": "^16.4.0",
-    "stylelint-config-standard": "^38.0.0",
+    "stylelint": "^17.16.0",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-config-standard-less": "^4.1.0",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "^5.4.5",
     "webpack": "5.91.0"
+  },
+  "engines": {
+    "node": ">=24.0.0 <25.0.0"
+  },
+  "templateInfo": {
+    "name": "default",
+    "typescript": true,
+    "css": "Less",
+    "framework": "React"
   }
 }

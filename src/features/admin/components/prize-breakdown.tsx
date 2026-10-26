@@ -1,6 +1,7 @@
 import { Text, View } from '@tarojs/components'
 
 import type { DailyPrizeStats } from '@/types/redemption'
+
 import './prize-breakdown.less'
 
 export default function PrizeBreakdown({ items }: { items: DailyPrizeStats['prizeBreakdown'] }) {

@@ -6,6 +6,7 @@ import PrizeArt from '@/components/prize-art'
 import useTaroAnimation from '@/hooks/use-taro-animation'
 
 import type { WinRecord } from '@/types/lottery'
+
 import './index.less'
 
 export type { WinRecord } from '@/types/lottery'
@@ -89,7 +90,7 @@ function WinModalContent({ record, onClose }: { record: WinRecord; onClose: () =
 
   return (
     <View className='win-modal-root' catchMove>
-      <View className='win-modal-scrim' onClick={onClose} />
+      <View className='win-modal-scrim' aria-hidden onClick={onClose} />
       <View
         className={`win-modal-dialog${isWin ? '' : ' win-modal-dialog--thanks'}`}
         animation={animation}

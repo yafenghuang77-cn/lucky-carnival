@@ -1,7 +1,8 @@
 import { Text, View } from '@tarojs/components'
-import './index.less'
 
 import type { PrizeKind } from '@/types/lottery'
+
+import './index.less'
 
 export type { PrizeKind } from '@/types/lottery'
 

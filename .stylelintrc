@@ -4,7 +4,11 @@
   "overrides": [
     {
       "files": ["**/*.less"],
-      "customSyntax": "postcss-less"
+      "extends": ["stylelint-config-standard-less"],
+      "customSyntax": "postcss-less",
+      "rules": {
+        "color-no-invalid-hex": true
+      }
     }
   ],
   "rules": {

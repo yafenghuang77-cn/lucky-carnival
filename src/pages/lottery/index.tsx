@@ -7,6 +7,7 @@ import LotteryBoard from '@/features/lottery/components/lottery-board'
 import LotteryFooter from '@/features/lottery/components/lottery-footer'
 import { showLotteryRules } from '@/features/lottery/rules'
 import useLottery from '@/hooks/use-lottery'
+
 import './index.less'
 
 export default function Lottery() {

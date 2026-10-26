@@ -6,6 +6,7 @@ import { getPrizePresentation } from '@/features/lottery/presentation'
 import useTaroAnimation from '@/hooks/use-taro-animation'
 
 import type { Prize } from '@/types/lottery'
+
 import './index.less'
 
 type Props = { prize: Prize; active?: boolean; featured?: boolean }

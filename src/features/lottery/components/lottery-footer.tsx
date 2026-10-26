@@ -1,6 +1,7 @@
 import { Text, View } from '@tarojs/components'
 
 import ActionButton from '@/components/action-button'
+
 import './lottery-footer.less'
 
 type Props = { rolling: boolean; onPrizes: () => void; onRules: () => void; onPreview: () => void }

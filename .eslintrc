@@ -26,16 +26,30 @@
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
     "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
     "plugin:import/recommended",
     "taro/rules/jsx",
     "taro/rules/imports",
     "taro/rules/variables",
     "prettier"
   ],
-  "plugins": ["react", "react-hooks", "import"],
+  "plugins": ["react", "react-hooks", "import", "simple-import-sort"],
   "settings": {
     "react": {
       "version": "detect"
+    },
+    "jsx-a11y": {
+      "components": {
+        "View": "div",
+        "Text": "span",
+        "Button": "button",
+        "ActionButton": "button",
+        "Input": "input",
+        "Textarea": "textarea",
+        "Image": "img",
+        "Label": "label",
+        "Video": "video"
+      }
     },
     "import/internal-regex": "^@/",
     "import/core-modules": null,
@@ -121,40 +135,15 @@
     "import/no-named-as-default-member": "off",
     "import/first": ["error", "disable-absolute-first"],
     "import/newline-after-import": "error",
-    "import/order": [
+    "import/order": "off",
+    "sort-imports": "off",
+    "simple-import-sort/imports": [
       "error",
       {
-        "groups": [
-          "builtin",
-          "external",
-          "internal",
-          ["parent", "sibling", "index"],
-          "object",
-          "type"
-        ],
-        "pathGroups": [
-          {
-            "pattern": "@/**",
-            "group": "internal"
-          }
-        ],
-        "pathGroupsExcludedImportTypes": ["builtin", "type"],
-        "newlines-between": "always",
-        "alphabetize": {
-          "order": "asc",
-          "caseInsensitive": true
-        },
-        "warnOnUnassignedImports": false
+        "groups": [["^node:"], ["^@?\\w"], ["^@/"], ["^\\."], ["^.*\\u0000$"], ["^\\u0000"]]
       }
     ],
-    "sort-imports": [
-      "error",
-      {
-        "ignoreCase": true,
-        "ignoreDeclarationSort": true,
-        "allowSeparatedGroups": true
-      }
-    ]
+    "simple-import-sort/exports": "error"
   },
   "overrides": [
     {
@@ -230,6 +219,21 @@
             "devDependencies": true
           }
         ]
+      }
+    },
+    {
+      "files": [
+        "**/*.{test,spec}.{js,jsx,ts,tsx,cjs,mjs}",
+        "**/__tests__/**/*.{js,jsx,ts,tsx,cjs,mjs}"
+      ],
+      "extends": ["plugin:jest/recommended"],
+      "env": {
+        "node": true
+      },
+      "rules": {
+        "jest/no-deprecated-functions": "off",
+        "import/no-nodejs-modules": "off",
+        "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
       }
     },
     {

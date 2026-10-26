@@ -1,4 +1,5 @@
 import { Text, View } from '@tarojs/components'
+
 import './chance-bar.less'
 
 export default function ChanceBar({ remain }: { remain: number }) {

@@ -6,6 +6,7 @@ import PrizeCard from '@/components/prize-card'
 import ChanceBar from './chance-bar'
 
 import type { Prize } from '@/types/lottery'
+
 import './lottery-board.less'
 
 type Props = {

@@ -3,6 +3,7 @@ import { Text, View } from '@tarojs/components'
 import { formatTime } from '@/utils/date'
 
 import type { DailyPrizeRecord } from '@/types/redemption'
+
 import './records-list.less'
 
 export default function RecordsList({

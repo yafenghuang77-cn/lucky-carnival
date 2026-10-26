@@ -7,20 +7,18 @@
 - 不手动编辑锁文件，不同时提交 npm 或 Yarn 的锁文件。
 - VS Code 使用项目的 TypeScript 版本；扩展推荐位于 `.vscode/extensions.json`，由开发者自行安装。
 
-新增依赖和编辑器扩展由开发者自行安装。首次启用检查前，补齐以下开发依赖：
+前端规范所需依赖已在 `package.json` 声明，首次开发执行：
 
 ```sh
-pnpm add -D prettier@latest postcss-less@latest
-pnpm add -D @typescript-eslint/parser@latest @typescript-eslint/eslint-plugin@latest eslint-plugin-import@latest eslint-import-resolver-typescript@latest eslint-config-prettier@latest
-pnpm prepare
-pnpm format
-pnpm lint:style:fix
+pnpm install
 pnpm check
 ```
 
-新增依赖安装后同步更新锁文件。上述初始化完成后，其他开发者正常执行 `pnpm install` 即可；`prepare` 自动初始化 Husky。
+新增依赖和编辑器扩展由开发者自行安装，依赖变更后同步更新锁文件。`pnpm install` 时的 `prepare` 自动初始化 Husky。
 
 已声明的依赖无需重复添加。现有 Taro 4.3.1 规则包的 peer dependency 限定 ESLint 8，因此 ESLint 主包保留 8.57.x。TypeScript ESLint 的 parser 与 plugin 保持相同版本；当前新版仍支持 ESLint 8.57。不要将 ESLint 主包单独升级到下一大版本。
+
+Stylelint 使用 17.x，CSS 标准配置使用 `stylelint-config-standard` 40.x，Less 使用 `stylelint-config-standard-less` 4.x；三者需要保持兼容，不要只升级其中一个配置包。项目的 Node.js 24.x 满足这套工具的运行要求。
 
 ## 格式与编辑器
 
@@ -29,6 +27,7 @@ pnpm check
 - Prettier 行宽为 100，允许尾随逗号，箭头函数参数保留括号。
 - Markdown 保留行尾空格，以兼容显式换行。
 - 格式以 `.prettierrc` 为准，编辑器保存时使用同一份配置。
+- `.prettierrc` 显式加载 `prettier-plugin-packagejson`，统一 `package.json` 顶层字段与依赖键的排序；编辑器、`pnpm format` 和提交前格式化共用此规则。
 - `.prettierignore` 排除构建产物、锁文件、个人小程序配置及工具缓存。
 - ESLint、Prettier、Stylelint、commitlint、lint-staged 分别使用 `.eslintrc`、`.prettierrc`、`.stylelintrc`、`.commitlintrc`、`.lintstagedrc`，均为 JSON 格式。
 - 格式问题由 Prettier 负责，`eslint-config-prettier` 关闭冲突规则。编辑器将这些无扩展名配置识别为 JSON，提交前也会格式化这些文件。
@@ -59,6 +58,7 @@ pnpm check
 
 - 开启 `strict`，保留未使用局部变量、未使用参数和文件名大小写检查。
 - 不使用隐式 `any`；优先用明确类型，无法确定的外部数据使用 `unknown` 并在边界校验。
+- 内部函数按实际调用约定声明明确类型，避免接收宽泛类型后重复判断；存储、接口等外部数据通过 `@/utils/schema` 导出的 Zod 校验结构，跳过错误记录时保留其余有效记录。该入口统一关闭动态代码生成以适配小程序。TypeScript 中用于类型推导的 `typeof` 可以保留。
 - 不通过关闭全局检查或添加 `@ts-ignore` 来绕过应用代码错误。
 - `skipLibCheck` 仅用于跳过第三方 `.d.ts` 检查，应用代码及 `config` 仍完整参与类型检查。
 - `tsc` 仅负责检查，不输出 JavaScript；构建由 Taro 完成。
@@ -69,11 +69,12 @@ pnpm check
 - 日期和时间统一通过 `@/utils/date` 中封装的 dayjs 处理，按北京时间（UTC+08:00）解析和展示。
 - 页面日期使用 `formatDate(value)`（`YYYY.MM.DD`），日期时间使用 `formatTime(value)`（`YYYY.MM.DD HH:mm`），短日期使用 `formatDate(value, 'MM.DD')`。
 - 日期选择器与每日限次的日期键使用 `shanghaiDay()`（`YYYY-MM-DD`）；时间计算、比较及记录生成使用 `shanghaiTime()`。
-- 时间记录保存为带时区的 ISO 格式；不使用 `toLocaleString()` 保存时间，也不通过字符串截取或替换来格式化日期。没有时区的历史记录按北京时间解析；缺失或无法解析的展示值显示 `—`。
+- 时间记录保存为带时区的 ISO 格式；不使用 `toLocaleString()` 保存时间，也不通过字符串截取或替换来格式化日期。支持 ISO 日期、日期时间及斜杠分隔的旧记录，没有时区的值按北京时间解析。日历日期、时分秒、时区偏移及完整输入格式均需校验，缺失或非法的展示值显示 `—`。
 
 ## 样式与跨端代码
 
-- 样式与组件就近存放，使用 Less；由 `postcss-less` 解析，Stylelint 检查样式质量。
+- 样式与组件就近存放，使用 Less；CSS 继承 `stylelint-config-standard`，Less 单独继承 `stylelint-config-standard-less` 并由 `postcss-less` 解析，检查无效十六进制颜色、重复变量等 Less 问题。
+- Less 配置显式启用 `color-no-invalid-hex` 检查声明中的颜色，配合 `less/color-no-invalid-hex` 检查变量中的颜色，避免 Less 预设关闭通用属性值校验后漏检。
 - 类名使用 kebab-case，允许 BEM 的 `__element` 和 `--modifier`，例如 `prize-card__title`、`prize-card--active`。
 - Prettier 负责排版，Stylelint 不额外强制空行规则。
 - 小程序 `page` 等原生标签加入允许列表；新增平台标签时只补充需要的标签，不整体关闭未知选择器检查。
@@ -93,19 +94,22 @@ pnpm check
 - React 检查列表 key、重复 props、错误 JSX、无用 Fragment、不稳定嵌套组件和原生按钮类型；TS 组件以类型定义约束 props，不额外要求 PropTypes。
 - React 18 使用自动 JSX runtime，不要求为了 JSX 单独导入 React。
 - Hooks 检查调用顺序和依赖完整性；不通过禁用检查来隐藏闭包和依赖问题。
+- 无障碍检查继承 `plugin:jsx-a11y/recommended`，将 Taro 的 `View`、`Text`、`Button`、`Input`、`Textarea`、`Image`、`Label`、`Video` 以及封装的 `ActionButton` 映射到相应 HTML 语义。新增通用组件时按实际行为补充映射；有点击行为的展示元素需要键盘支持及相应语义，纯装饰元素使用 `aria-hidden`。静态检查不能替代 H5 键盘操作和小程序读屏验证。
 - 通过 `extends` 引用 Taro 的 JSX、导入和变量子配置，不继承含旧版 TypeScript 解析器的完整配置，以免与项目直接声明的新解析器混用。
 - 应用源码禁止引入 Node 内置模块及仅存在于 devDependencies 的运行时依赖，构建配置可以使用开发依赖。
 - TypeScript 检查显式 `any`、变量遮蔽、未使用变量，并要求 `import type`；类型错误交给 `tsc`，ESLint 不额外创建一套完整类型检查程序。
 - 导入检查重复、无法解析、自引用和最多三层的本地循环依赖；`@/` 通过项目 tsconfig 解析。循环检查限制深度以控制扫描成本，不能视为整个依赖图无环的保证。
 - `.d.ts` 允许全局命名空间和类型引用，构建配置允许 CommonJS。
+- `eslint-plugin-jest` 的推荐规则只应用于 `*.test.*`、`*.spec.*` 和 `__tests__/` 中的 JS/TS 文件，检查聚焦测试、禁用测试、重复标题与断言用法，测试文件允许引入开发依赖和 Node 内置模块。当前尚未安装 Jest 测试运行器，因此暂不启用依赖 Jest 版本检测的 `jest/no-deprecated-functions`；接入真实 Jest 后移除此覆盖以恢复检查。该插件仅提供静态检查，不会执行测试，也不向业务源码开放 Jest 全局变量。
 
-有绑定的导入按以下顺序分组，组间空一行；组内按路径字母排序，具名导入成员也按字母排序：
+`eslint-plugin-simple-import-sort` 统一排序导入和可排序的导出，关闭 `import/order` 与内置 `sort-imports` 以避免重复排序；`eslint-plugin-import` 继续负责解析、重复导入和循环依赖等质量检查。导入按以下顺序分组，组间空一行；组内按插件的自然排序排列路径和具名导入成员，`import type` 单独归组：
 
-1. Node 内置模块（仅构建配置使用）。
+1. 使用 `node:` 前缀的 Node 内置模块（构建配置和测试文件使用）。
 2. 外部依赖，包括 React、Taro。
 3. `@/` 内部模块。
 4. 父级、同级目录和 index 相对导入。
-5. TypeScript 的 object import 与纯类型导入。
+5. 纯类型导入。
+6. 样式和其他副作用导入。
 
 ```tsx
 import { View } from '@tarojs/components'
@@ -119,7 +123,7 @@ import type { Prize } from '@/types/lottery'
 import './index.less'
 ```
 
-样式和其他副作用导入通常放在导入区末尾，但其相互顺序可能影响行为，因此 ESLint 不自动重排这些语句。调整有明确执行顺序要求的副作用导入时，需单独检查行为。
+样式和其他副作用导入统一放在导入区末尾，排序插件保留这些副作用导入彼此的相对顺序；它们相对其他分组的位置会调整。有必须在其他模块之前执行的初始化逻辑时，应拆分独立入口并明确依赖顺序，单独验证行为。
 
 ## 检查命令
 

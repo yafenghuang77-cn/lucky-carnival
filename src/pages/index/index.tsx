@@ -6,6 +6,7 @@ import PrizeArt from '@/components/prize-art'
 import { showLotteryRules } from '@/features/lottery/rules'
 import lotteryMock from '@/mock/lottery.json'
 import { formatDate } from '@/utils/date'
+
 import './index.less'
 
 export default function Index() {

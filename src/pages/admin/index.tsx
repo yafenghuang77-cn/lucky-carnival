@@ -8,6 +8,7 @@ import RecordsList from '@/features/admin/components/records-list'
 import SummaryCards from '@/features/admin/components/summary-cards'
 import { DEMO_STATS_DAYS, getDemoDailyStats } from '@/services/admin-demo'
 import { formatDate, shanghaiDay } from '@/utils/date'
+
 import './index.less'
 
 type Filter = 'all' | 'received' | 'pending'

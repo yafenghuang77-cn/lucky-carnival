@@ -91,4 +91,4 @@ pnpm check
 
 TypeScript 开启严格模式、未使用变量和参数检查；`skipLibCheck` 跳过 Taro/Webpack 的第三方声明检查，应用代码与构建配置仍参与检查。H5 生产构建存在框架的动态依赖与包体积提示。
 
-规范工具所需的完整依赖清单见 [开发约定](CONTRIBUTING.md#开发环境)，由开发者手动安装。ESLint 覆盖 React、Taro、Hooks、TypeScript/JavaScript 和导入顺序，已纳入 `pnpm check` 与提交前检查。编辑器扩展仅提供推荐列表，由开发者自行安装。
+规范工具依赖已在 `package.json` 声明，执行 `pnpm install` 即可安装。ESLint 覆盖 React、Taro、Hooks、TypeScript/JavaScript、导入与导出排序、Taro 组件无障碍检查及测试文件中的 Jest 规范；Prettier 统一格式与 `package.json` 排序；Stylelint 17 分别检查 CSS 和 Less。以上均接入 `pnpm check` 与提交前检查，Jest 插件仅检查测试代码，不执行测试。详细规则见 [开发约定](CONTRIBUTING.md)。编辑器扩展仅提供推荐列表，由开发者自行安装。

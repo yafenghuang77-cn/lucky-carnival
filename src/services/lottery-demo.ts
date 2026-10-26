@@ -1,26 +1,38 @@
 import Taro from '@tarojs/taro'
 
 import { shanghaiDay, shanghaiTime } from '@/utils/date'
+import { array, boolean, enumSchema, looseObject, optional, string, unknown } from '@/utils/schema'
 
 import type { WinRecord } from '@/types/lottery'
 import type { PrizeVoucher } from '@/types/redemption'
+import type { Schema } from '@/utils/schema'
 
 const KEY = 'carnival_demo_vouchers_v1'
+const storedVouchersSchema = array(unknown())
+const voucherSchema: Schema<PrizeVoucher> = looseObject({
+  id: string(),
+  prizeName: string(),
+  prizeDesc: optional(string()),
+  prizeKind: optional(
+    enumSchema(['phone', 'redpack', 'coupon', 'coffee', 'points', 'thanks', 'shipping']),
+  ),
+  prizeValue: optional(string()),
+  isWin: optional(boolean()),
+  status: optional(enumSchema(['pending', 'claimed', 'expired'])),
+  code: string(),
+  expiresAt: string(),
+  wonAt: optional(string()),
+})
 
 export function getDemoVouchers(): PrizeVoucher[] {
-  const saved: unknown = Taro.getStorageSync(KEY)
-  if (!Array.isArray(saved)) {
+  const saved = storedVouchersSchema.safeParse(Taro.getStorageSync(KEY))
+  if (!saved.success) {
     return []
   }
-  return saved.filter((item): item is PrizeVoucher =>
-    Boolean(
-      item &&
-      typeof item.id === 'string' &&
-      typeof item.prizeName === 'string' &&
-      typeof item.code === 'string' &&
-      typeof item.expiresAt === 'string',
-    ),
-  )
+  return saved.data.flatMap((item) => {
+    const parsed = voucherSchema.safeParse(item)
+    return parsed.success ? [parsed.data] : []
+  })
 }
 
 export function saveDemoVoucher(record: WinRecord, endTime: string): PrizeVoucher {

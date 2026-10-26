@@ -5,6 +5,7 @@ import useTaroAnimation from '@/hooks/use-taro-animation'
 
 import type { ButtonProps } from '@tarojs/components'
 import type { KeyboardEvent } from 'react'
+
 import './index.less'
 
 type Props = Pick<ButtonProps, 'children' | 'className' | 'disabled'> & {

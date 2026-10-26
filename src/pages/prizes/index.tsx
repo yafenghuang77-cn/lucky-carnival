@@ -7,6 +7,7 @@ import VoucherCard, { voucherStatus } from '@/features/prizes/components/voucher
 import { getDemoVouchers } from '@/services/lottery-demo'
 
 import type { PrizeVoucher } from '@/types/redemption'
+
 import './index.less'
 
 type Filter = 'all' | 'pending' | 'claimed'
