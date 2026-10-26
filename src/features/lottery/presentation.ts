@@ -1,4 +1,6 @@
-import type { Prize, PrizeKind, WinRecord } from '../../types/lottery'
+import { shanghaiTime } from '@/utils/date'
+
+import type { Prize, PrizeKind, WinRecord } from '@/types/lottery'
 
 const PRESENTATION: Record<string, { kind: PrizeKind; hint: string; value?: string }> = {
   p1: { kind: 'phone', hint: '人气大奖' },
@@ -16,14 +18,15 @@ export const getPrizePresentation = (prize: Prize) =>
 
 export function makeWinRecord(prize: Prize): WinRecord {
   const { kind, hint, value } = getPrizePresentation(prize)
+  const now = shanghaiTime()
   return {
-    id: `draw_${Date.now()}`,
+    id: `draw_${now.valueOf()}`,
     prizeName: prize.name,
     prizeDesc: prize.type === 'thanks' ? '谢谢你的参与，下一份惊喜也许就属于你。' : hint,
     prizeKind: kind,
     prizeValue: value,
     isWin: prize.type !== 'thanks',
     status: 'pending',
-    wonAt: new Date().toLocaleString('zh-CN'),
+    wonAt: now.format(),
   }
 }

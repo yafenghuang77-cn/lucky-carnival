@@ -1,11 +1,11 @@
 import { Text, View } from '@tarojs/components'
 import { setClipboardData } from '@tarojs/taro'
 
-import ActionButton from '../../../components/action-button'
-import PrizeArt from '../../../components/prize-art'
-import { formatTime } from '../../../utils/date'
+import ActionButton from '@/components/action-button'
+import PrizeArt from '@/components/prize-art'
+import { formatTime, shanghaiTime } from '@/utils/date'
 
-import type { PrizeVoucher } from '../../../types/redemption'
+import type { PrizeVoucher } from '@/types/redemption'
 import './voucher-card.less'
 
 type Props = { voucher: PrizeVoucher; example?: boolean }
@@ -13,7 +13,7 @@ type Props = { voucher: PrizeVoucher; example?: boolean }
 export const voucherStatus = (voucher: PrizeVoucher) =>
   voucher.status === 'claimed'
     ? 'claimed'
-    : new Date(voucher.expiresAt).getTime() < Date.now()
+    : shanghaiTime(voucher.expiresAt).isBefore(shanghaiTime())
       ? 'expired'
       : 'pending'
 
@@ -35,7 +35,7 @@ export default function VoucherCard({ voucher, example }: Props) {
         </Text>
       </View>
       <View className='voucher-card-code'>
-        <View>
+        <View className='voucher-code-details'>
           <Text className='voucher-code-label'>{example ? '示例兑奖码' : '演示兑奖码'}</Text>
           <Text className='voucher-code'>{voucher.code}</Text>
         </View>

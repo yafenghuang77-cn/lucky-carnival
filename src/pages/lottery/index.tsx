@@ -1,12 +1,12 @@
 import { View } from '@tarojs/components'
 import { navigateTo } from '@tarojs/taro'
 
-import WinModal from '../../components/win-modal'
-import ActivityHero from '../../features/lottery/components/activity-hero'
-import LotteryBoard from '../../features/lottery/components/lottery-board'
-import LotteryFooter from '../../features/lottery/components/lottery-footer'
-import { showLotteryRules } from '../../features/lottery/rules'
-import useLottery from '../../hooks/use-lottery'
+import WinModal from '@/components/win-modal'
+import ActivityHero from '@/features/lottery/components/activity-hero'
+import LotteryBoard from '@/features/lottery/components/lottery-board'
+import LotteryFooter from '@/features/lottery/components/lottery-footer'
+import { showLotteryRules } from '@/features/lottery/rules'
+import useLottery from '@/hooks/use-lottery'
 import './index.less'
 
 export default function Lottery() {
@@ -30,7 +30,6 @@ export default function Lottery() {
           activePrize={lottery.activePrize}
           rolling={lottery.rolling}
           remain={lottery.remain}
-          drawButtonRef={lottery.drawButtonRef}
           onDraw={lottery.startDraw}
         />
         <LotteryFooter

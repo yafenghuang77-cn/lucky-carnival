@@ -1,10 +1,11 @@
 import { Text, View } from '@tarojs/components'
 import { navigateTo } from '@tarojs/taro'
 
-import ActionButton from '../../components/action-button'
-import PrizeArt from '../../components/prize-art'
-import { showLotteryRules } from '../../features/lottery/rules'
-import lotteryMock from '../../mock/lottery.json'
+import ActionButton from '@/components/action-button'
+import PrizeArt from '@/components/prize-art'
+import { showLotteryRules } from '@/features/lottery/rules'
+import lotteryMock from '@/mock/lottery.json'
+import { formatDate } from '@/utils/date'
 import './index.less'
 
 export default function Index() {
@@ -39,7 +40,7 @@ export default function Index() {
           <View className='index-card-date'>
             <View />
             <Text>
-              {activity.startTime.replace(/-/g, '.')} — {activity.endTime.replace(/-/g, '.')}
+              {formatDate(activity.startTime)} — {formatDate(activity.endTime)}
             </Text>
             <View />
           </View>

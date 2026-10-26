@@ -1,7 +1,7 @@
 import { Input, Text, View } from '@tarojs/components'
 import { useState } from 'react'
 
-import ActionButton from '../../../components/action-button'
+import ActionButton from '@/components/action-button'
 import './admin-login.less'
 
 type Props = { onPreview: () => void }

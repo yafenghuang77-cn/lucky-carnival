@@ -21,7 +21,8 @@
   max-width: 88%;
   margin: auto;
   text-align: center;
-  animation: win-arrive 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  transform: translateY(20px) scale(0.96);
 }
 .win-ticket {
   position: relative;
@@ -247,21 +248,6 @@
   top: 230px;
   right: -25px;
   transform: rotate(-15deg);
-}
-@keyframes win-arrive {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .win-modal-dialog {
-    animation: none;
-  }
 }
 
 .win-result-note {

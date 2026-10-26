@@ -1,9 +1,9 @@
 import { Text, View } from '@tarojs/components'
 import './index.less'
 
-import type { PrizeKind } from '../../types/lottery'
+import type { PrizeKind } from '@/types/lottery'
 
-export type { PrizeKind } from '../../types/lottery'
+export type { PrizeKind } from '@/types/lottery'
 
 type Props = {
   kind: PrizeKind

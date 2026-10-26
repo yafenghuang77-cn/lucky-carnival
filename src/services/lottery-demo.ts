@@ -1,9 +1,9 @@
 import Taro from '@tarojs/taro'
 
-import { shanghaiDay } from '../utils/date'
+import { shanghaiDay, shanghaiTime } from '@/utils/date'
 
-import type { WinRecord } from '../types/lottery'
-import type { PrizeVoucher } from '../types/redemption'
+import type { WinRecord } from '@/types/lottery'
+import type { PrizeVoucher } from '@/types/redemption'
 
 const KEY = 'carnival_demo_vouchers_v1'
 
@@ -27,7 +27,7 @@ export function saveDemoVoucher(record: WinRecord, endTime: string): PrizeVouche
   const voucher: PrizeVoucher = {
     ...record,
     code: `DEMO${Math.random().toString(36).slice(2, 6).toUpperCase().padEnd(4, '0')}`,
-    expiresAt: `${endTime}T23:59:59+08:00`,
+    expiresAt: shanghaiTime(endTime).endOf('day').format(),
   }
   const existing = getDemoVouchers().filter((item) => item.id !== record.id)
   Taro.setStorageSync(KEY, [voucher, ...existing])

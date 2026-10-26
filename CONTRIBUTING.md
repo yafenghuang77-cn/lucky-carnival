@@ -51,7 +51,7 @@ pnpm check
 - 文件和目录沿用 kebab-case；页面和通用组件入口沿用 `index.tsx`。
 - React 组件名称使用 PascalCase；Hook 使用 `use` 前缀；普通变量和函数使用 camelCase。
 - 组件专用类型放在组件附近，跨模块复用的类型放入 `src/types`；类型导入优先使用 `import type`。
-- 模块内部优先使用相对路径；跨业务模块可以使用已配置的 `@/` 别名。
+- 模块内部的组件、样式和类型保留相对路径；跨模块引用共享组件、Hook、服务、工具、数据和类型时统一使用 `@/` 别名（映射到 `src/`），避免多层 `../`。`config/` 等源码目录之外的本地引用保留相对路径。
 - 展示组件通过 props 接收数据和事件；存储与接口调用放在 `services`，避免直接写入展示组件。
 - 依赖方向以页面组装业务组件、业务组件复用通用组件为主，通用组件不反向依赖业务页面。
 
@@ -64,6 +64,13 @@ pnpm check
 - `tsc` 仅负责检查，不输出 JavaScript；构建由 Taro 完成。
 - 全量类型检查使用 `pnpm typecheck`，不要按暂存文件逐个调用 `tsc`，以免绕过项目配置。
 
+## 日期与时间
+
+- 日期和时间统一通过 `@/utils/date` 中封装的 dayjs 处理，按北京时间（UTC+08:00）解析和展示。
+- 页面日期使用 `formatDate(value)`（`YYYY.MM.DD`），日期时间使用 `formatTime(value)`（`YYYY.MM.DD HH:mm`），短日期使用 `formatDate(value, 'MM.DD')`。
+- 日期选择器与每日限次的日期键使用 `shanghaiDay()`（`YYYY-MM-DD`）；时间计算、比较及记录生成使用 `shanghaiTime()`。
+- 时间记录保存为带时区的 ISO 格式；不使用 `toLocaleString()` 保存时间，也不通过字符串截取或替换来格式化日期。没有时区的历史记录按北京时间解析；缺失或无法解析的展示值显示 `—`。
+
 ## 样式与跨端代码
 
 - 样式与组件就近存放，使用 Less；由 `postcss-less` 解析，Stylelint 检查样式质量。
@@ -72,6 +79,7 @@ pnpm check
 - 小程序 `page` 等原生标签加入允许列表；新增平台标签时只补充需要的标签，不整体关闭未知选择器检查。
 - 保留传统 `rgb()/rgba()` 和 `min-width`、`max-width` 媒体查询语法，避免自动升级为仅适用于部分浏览器的写法。
 - 共享组件优先使用 Taro 组件和 API；DOM、键盘及焦点操作放入明确的 `process.env.TARO_ENV === 'h5'` 分支。
+- 页面和组件的 JSX 统一使用 `@tarojs/components`，禁止原生 HTML 标签；`src/index.html` 仅作为 H5 宿主模板保留。跨端动画使用 `Taro.createAnimation`，通过组件的 `animation` 属性驱动。
 - 事件、计时器和订阅需要在组件销毁时清理。
 - 项目设计宽度为 750，样式尺寸沿用现有 Taro 转换方式，避免混用未经说明的尺寸方案。
 - H5 和微信小程序共用 `dist/`，按顺序构建与验证。
@@ -104,8 +112,7 @@ import { View } from '@tarojs/components'
 import { useState } from 'react'
 
 import ActionButton from '@/components/action-button'
-
-import { formatTime } from '../utils/date'
+import { formatTime } from '@/utils/date'
 
 import type { Prize } from '@/types/lottery'
 

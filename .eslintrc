@@ -163,6 +163,13 @@
         "browser": true
       },
       "rules": {
+        "no-restricted-syntax": [
+          "error",
+          {
+            "selector": "JSXOpeningElement[name.type='JSXIdentifier'][name.name=/^[a-z]/]",
+            "message": "页面和组件必须使用 Taro 组件，不要使用原生 HTML 标签。"
+          }
+        ],
         "import/no-nodejs-modules": "error",
         "import/no-extraneous-dependencies": [
           "error",

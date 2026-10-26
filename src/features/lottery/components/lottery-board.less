@@ -45,12 +45,6 @@
   color: var(--carnival-cream);
   box-shadow: 0 6px 0 #100e0e;
   line-height: 1;
-  transition:
-    background 150ms,
-    transform 150ms;
-}
-.lottery-go:active:not([disabled]) {
-  transform: translateY(3px);
 }
 .lottery-go[disabled] {
   color: #faf4f3;
@@ -91,9 +85,4 @@
   height: 5px;
   border-radius: 50%;
   background: #d9bfba;
-}
-@media (prefers-reduced-motion: reduce) {
-  .lottery-go {
-    transition: none;
-  }
 }

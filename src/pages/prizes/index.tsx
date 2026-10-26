@@ -2,11 +2,11 @@ import { Text, View } from '@tarojs/components'
 import { navigateBack, redirectTo, useDidShow } from '@tarojs/taro'
 import { useState } from 'react'
 
-import ActionButton from '../../components/action-button'
-import VoucherCard, { voucherStatus } from '../../features/prizes/components/voucher-card'
-import { getDemoVouchers } from '../../services/lottery-demo'
+import ActionButton from '@/components/action-button'
+import VoucherCard, { voucherStatus } from '@/features/prizes/components/voucher-card'
+import { getDemoVouchers } from '@/services/lottery-demo'
 
-import type { PrizeVoucher } from '../../types/redemption'
+import type { PrizeVoucher } from '@/types/redemption'
 import './index.less'
 
 type Filter = 'all' | 'pending' | 'claimed'

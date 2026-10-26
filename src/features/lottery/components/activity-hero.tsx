@@ -1,4 +1,7 @@
 import { Text, View } from '@tarojs/components'
+
+import { formatDate } from '@/utils/date'
+
 import './activity-hero.less'
 
 type Props = { title: string; startTime: string; endTime: string }
@@ -24,7 +27,7 @@ export default function ActivityHero({ title, startTime, endTime }: Props) {
         <View className='hero-date'>
           <View className='hero-date-dot' />
           <Text>
-            {startTime.replace(/-/g, '.')} — {endTime.replace(/-/g, '.')}
+            {formatDate(startTime)} — {formatDate(endTime)}
           </Text>
         </View>
         <View className='hero-orbit' aria-hidden />

@@ -71,9 +71,10 @@
   padding: 24px 28px;
   border-top: 2px dashed #e8d8cf;
 }
-.voucher-card-code > view,
-.voucher-card-code > taro-view-core {
+.voucher-code-details {
   display: flex;
+  flex: 1;
+  min-width: 0;
   flex-direction: column;
   gap: 8px;
 }
@@ -87,9 +88,15 @@
   font-size: 36px;
   letter-spacing: 5px;
   color: #302728;
+  overflow-wrap: anywhere;
 }
 .voucher-copy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
+  width: auto;
+  max-width: 100%;
   min-height: 88px;
   margin: 0;
   padding: 0 20px;
@@ -98,6 +105,7 @@
   color: #b21730;
   background: #fff2ed;
   border: 2px solid #edd2ca;
+  white-space: nowrap;
 }
 .voucher-demo-note {
   display: block;

@@ -1,12 +1,12 @@
 import { showToast, useDidShow } from '@tarojs/taro'
 import { useEffect, useRef, useState } from 'react'
 
-import { makeWinRecord } from '../features/lottery/presentation'
-import lotteryMock from '../mock/lottery.json'
-import { consumeDemoChance, getDemoRemaining, saveDemoVoucher } from '../services/lottery-demo'
-import { shanghaiDay } from '../utils/date'
+import { makeWinRecord } from '@/features/lottery/presentation'
+import lotteryMock from '@/mock/lottery.json'
+import { consumeDemoChance, getDemoRemaining, saveDemoVoucher } from '@/services/lottery-demo'
+import { shanghaiTime } from '@/utils/date'
 
-import type { WinRecord } from '../types/lottery'
+import type { WinRecord } from '@/types/lottery'
 
 // Clockwise prize indexes; the center is reserved for GO.
 const ROLL_ORDER = [0, 1, 2, 4, 7, 6, 5, 3]
@@ -20,7 +20,6 @@ export default function useLottery() {
   const [winRecord, setWinRecord] = useState<WinRecord | null>(null)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const rollingRef = useRef(false)
-  const drawButtonRef = useRef<HTMLButtonElement | null>(null)
 
   useEffect(
     () => () => {
@@ -36,13 +35,14 @@ export default function useLottery() {
   useEffect(() => {
     let midnightTimer: ReturnType<typeof setTimeout>
     const scheduleReset = () => {
-      const nextDay = new Date(`${shanghaiDay()}T00:00:00+08:00`).getTime() + 86400000
+      const now = shanghaiTime()
+      const nextDay = now.add(1, 'day').startOf('day')
       midnightTimer = setTimeout(
         () => {
           setRemain(getDemoRemaining())
           scheduleReset()
         },
-        Math.max(100, nextDay - Date.now() + 100),
+        Math.max(100, nextDay.diff(now) + 100),
       )
     }
     scheduleReset()
@@ -121,7 +121,6 @@ export default function useLottery() {
     rolling,
     winVisible,
     winRecord,
-    drawButtonRef,
     startDraw,
     previewWin,
     closeModal,

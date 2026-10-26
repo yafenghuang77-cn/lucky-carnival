@@ -1,4 +1,6 @@
-import type { DailyPrizeRecord, DailyPrizeStats } from '../types/redemption'
+import { shanghaiTime } from '@/utils/date'
+
+import type { DailyPrizeRecord, DailyPrizeStats } from '@/types/redemption'
 
 // Fictional records only. Replace this adapter with authenticated API calls later.
 const SAMPLE = [
@@ -95,8 +97,9 @@ export function getDemoDailyStats(day: string): DailyPrizeStats {
     userId: item.userId,
     prizeName: item.prizeName,
     prizeKind: item.prizeKind,
-    wonAt: `${day}T${item.time}+08:00`,
-    receivedAt: item.status === 'received' ? `${day}T${item.time}+08:00` : undefined,
+    wonAt: shanghaiTime(`${day}T${item.time}`).format(),
+    receivedAt:
+      item.status === 'received' ? shanghaiTime(`${day}T${item.time}`).format() : undefined,
     status: item.status,
   }))
   const received = records.filter((item) => item.status === 'received')

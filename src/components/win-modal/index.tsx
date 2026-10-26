@@ -1,13 +1,14 @@
 import { Text, View } from '@tarojs/components'
 import { useEffect, useRef } from 'react'
 
-import ActionButton from '../action-button'
-import PrizeArt from '../prize-art'
+import ActionButton from '@/components/action-button'
+import PrizeArt from '@/components/prize-art'
+import useTaroAnimation from '@/hooks/use-taro-animation'
 
-import type { WinRecord } from '../../types/lottery'
+import type { WinRecord } from '@/types/lottery'
 import './index.less'
 
-export type { WinRecord } from '../../types/lottery'
+export type { WinRecord } from '@/types/lottery'
 
 type Props = {
   visible: boolean
@@ -16,11 +17,27 @@ type Props = {
 }
 
 export default function WinModal({ visible, record, onClose }: Props) {
+  if (!visible || !record) {
+    return null
+  }
+  return <WinModalContent record={record} onClose={onClose} />
+}
+
+function WinModalContent({ record, onClose }: { record: WinRecord; onClose: () => void }) {
+  const { animation, animate } = useTaroAnimation()
   const closeRef = useRef(onClose)
   closeRef.current = onClose
 
   useEffect(() => {
-    if (!visible || process.env.TARO_ENV !== 'h5') {
+    // Let the initial pose render before starting the entrance on either platform.
+    const timer = setTimeout(() => {
+      animate((motion) => motion.opacity(1).translateY(0).scale(1), 300)
+    }, 32)
+    return () => clearTimeout(timer)
+  }, [animate])
+
+  useEffect(() => {
+    if (process.env.TARO_ENV !== 'h5') {
       return
     }
     const previousFocus = document.activeElement as HTMLElement | null
@@ -29,10 +46,12 @@ export default function WinModal({ visible, record, onClose }: Props) {
     const root = document.querySelector('.win-modal-root')
     const focusable = () =>
       Array.from(
-        root?.querySelectorAll<HTMLElement>('button:not([disabled]), [tabindex="0"]') || [],
+        root?.querySelectorAll<HTMLElement>('[role="button"]:not([disabled]), [tabindex="0"]') ||
+          [],
       )
     const dialog = root?.querySelector<HTMLElement>('[role="dialog"]')
-    dialog?.focus({ preventScroll: true })
+    // H5 custom elements finish applying tabIndex after React's effect runs.
+    const focusTimer = setTimeout(() => dialog?.focus({ preventScroll: true }), 32)
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         closeRef.current()
@@ -59,15 +78,13 @@ export default function WinModal({ visible, record, onClose }: Props) {
     }
     document.addEventListener('keydown', onKeyDown)
     return () => {
+      clearTimeout(focusTimer)
       document.body.style.overflow = previousOverflow
       document.removeEventListener('keydown', onKeyDown)
       previousFocus?.focus()
     }
-  }, [visible])
+  }, [])
 
-  if (!visible || !record) {
-    return null
-  }
   const isWin = record.isWin !== false
 
   return (
@@ -75,6 +92,7 @@ export default function WinModal({ visible, record, onClose }: Props) {
       <View className='win-modal-scrim' onClick={onClose} />
       <View
         className={`win-modal-dialog${isWin ? '' : ' win-modal-dialog--thanks'}`}
+        animation={animation}
         role='dialog'
         {...(process.env.TARO_ENV === 'h5' ? { tabIndex: -1 } : {})}
         aria-modal

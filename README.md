@@ -18,11 +18,12 @@ src/
     prizes/components/         VoucherCard 奖券卡片
     admin/components/          AdminLogin、SummaryCards、RecordsList、PrizeBreakdown
   components/
-    action-button/             H5 原生按钮 / 小程序 Taro 按钮
+    action-button/             统一 Taro 按钮，包含 H5 键盘支持
     prize-art/                 可复用 CSS 奖品插画
     prize-card/                九宫格奖品卡片
     win-modal/                 中奖与未中奖结果展示，无确认按钮
   hooks/use-lottery.ts          抽奖状态、计时器、每日机会重置
+  hooks/use-taro-animation.ts   Taro 动画实例与导出、H5 减少动态效果偏好
   services/
     lottery-demo.ts            本机每日机会与演示奖券存储
     admin-demo.ts              虚构统计数据适配器
@@ -39,6 +40,10 @@ config/                        Taro 与 Webpack 环境配置
 参考 KFC 红白黑配色：红 `#E4002B`、奶油白 `#FFFAF2`、炭黑 `#252223`、金色 `#FFDF91`。九宫格采用票券式框架和统一的 CSS 奖品插画；中央 GO 是主操作。
 
 中奖弹窗展示对应奖品、中奖文案、虚线票券装饰，只保留关闭图标。未中奖使用独立的四叶草画面和文案。H5 支持 Escape 关闭、焦点约束、减少动态效果偏好。
+
+页面和组件统一使用 `@tarojs/components`，ESLint 禁止 JSX 中的原生 HTML 标签。`src/index.html` 是 H5 构建所需的宿主模板，保留 HTML 文档结构和挂载节点。
+
+弹窗入场、奖品格缩放和按钮按压反馈统一使用 `Taro.createAnimation` 与组件的 `animation` 属性，H5 和微信小程序共用实现，无需安装动画插件。抽奖格子的顺时针顺序与减速节奏由抽奖 Hook 的计时器控制；奖品背景和边框通过激活态类名切换。
 
 ## 每日抽奖规则
 

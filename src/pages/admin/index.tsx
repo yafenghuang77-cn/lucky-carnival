@@ -1,13 +1,13 @@
 import { Input, Picker, Text, View } from '@tarojs/components'
 import { useMemo, useState } from 'react'
 
-import ActionButton from '../../components/action-button'
-import AdminLogin from '../../features/admin/components/admin-login'
-import PrizeBreakdown from '../../features/admin/components/prize-breakdown'
-import RecordsList from '../../features/admin/components/records-list'
-import SummaryCards from '../../features/admin/components/summary-cards'
-import { DEMO_STATS_DAYS, getDemoDailyStats } from '../../services/admin-demo'
-import { shanghaiDay } from '../../utils/date'
+import ActionButton from '@/components/action-button'
+import AdminLogin from '@/features/admin/components/admin-login'
+import PrizeBreakdown from '@/features/admin/components/prize-breakdown'
+import RecordsList from '@/features/admin/components/records-list'
+import SummaryCards from '@/features/admin/components/summary-cards'
+import { DEMO_STATS_DAYS, getDemoDailyStats } from '@/services/admin-demo'
+import { formatDate, shanghaiDay } from '@/utils/date'
 import './index.less'
 
 type Filter = 'all' | 'received' | 'pending'
@@ -82,7 +82,7 @@ export default function Admin() {
               onChange={(event) => setDay(event.detail.value)}
             >
               <View className='admin-date-picker'>
-                <Text>{day.replace(/-/g, '.')}</Text>
+                <Text>{formatDate(day)}</Text>
                 <Text>⌄</Text>
               </View>
             </Picker>
@@ -94,7 +94,7 @@ export default function Admin() {
                 className={`admin-date-shortcut${day === date ? ' admin-date-shortcut--active' : ''}`}
                 onClick={() => setDay(date)}
               >
-                {date.slice(5).replace('-', '.')}
+                {formatDate(date, 'MM.DD')}
               </ActionButton>
             ))}
           </View>
