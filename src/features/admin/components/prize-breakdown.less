@@ -1,20 +1,92 @@
-.admin-breakdown-legend { display: flex; align-items: center; gap: 10px; margin: 20px 0 22px; font-size: 20px; color: #85716c; }
-.breakdown-dot { width: 14px; height: 14px; border-radius: 4px; background: #e4002b; }
-.breakdown-dot--pending { background: #d8c6bb; margin-left: 20px; }
-.admin-breakdown-item { margin: 23px 0 0; }
-.admin-breakdown-label { display: flex; align-items: center; justify-content: space-between; gap: 16px; color: #584441; font-size: 23px; line-height: 1.6; }
-.admin-breakdown-label text:last-child { font-size: 20px; color: #8e7770; flex-shrink: 0; }
-.admin-breakdown-track { display: flex; height: 10px; overflow: hidden; margin-top: 10px; border-radius: 8px; background: #f5eee8; }
-.admin-breakdown-fill { height: 100%; background: #e4002b; }
-.admin-breakdown-fill--pending { background: #d8c6bb; }
-.admin-breakdown-empty { display: block; text-align: center; padding: 40px 0; font-size: 24px; color: #917d78; }
+.admin-breakdown-legend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0 22px;
+  font-size: 20px;
+  color: #85716c;
+}
+.breakdown-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  background: #e4002b;
+}
+.breakdown-dot--pending {
+  background: #d8c6bb;
+  margin-left: 20px;
+}
+.admin-breakdown-item {
+  margin: 23px 0 0;
+}
+.admin-breakdown-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: #584441;
+  font-size: 23px;
+  line-height: 1.6;
+}
+.admin-breakdown-label text:last-child {
+  font-size: 20px;
+  color: #8e7770;
+  flex-shrink: 0;
+}
+.admin-breakdown-track {
+  display: flex;
+  height: 10px;
+  overflow: hidden;
+  margin-top: 10px;
+  border-radius: 8px;
+  background: #f5eee8;
+}
+.admin-breakdown-fill {
+  height: 100%;
+  background: #e4002b;
+}
+.admin-breakdown-fill--pending {
+  background: #d8c6bb;
+}
+.admin-breakdown-empty {
+  display: block;
+  text-align: center;
+  padding: 40px 0;
+  font-size: 24px;
+  color: #917d78;
+}
 @media (min-width: 900px) {
-  .admin-breakdown-legend { gap: 7PX; margin: 16PX 0; font-size: 11PX; }
-  .breakdown-dot { width: 9PX; height: 9PX; border-radius: 3PX; }
-  .breakdown-dot--pending { margin-left: 12PX; }
-  .admin-breakdown-item { margin-top: 18PX; }
-  .admin-breakdown-label { align-items: flex-start; flex-direction: column; gap: 4PX; font-size: 13PX; }
-  .admin-breakdown-label text:last-child { font-size: 11PX; }
-  .admin-breakdown-track { height: 6PX; margin-top: 8PX; }
-  .admin-breakdown-empty { padding: 30PX 0; font-size: 14PX; }
+  .admin-breakdown-legend {
+    gap: 7px;
+    margin: 16px 0;
+    font-size: 11px;
+  }
+  .breakdown-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 3px;
+  }
+  .breakdown-dot--pending {
+    margin-left: 12px;
+  }
+  .admin-breakdown-item {
+    margin-top: 18px;
+  }
+  .admin-breakdown-label {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+  }
+  .admin-breakdown-label text:last-child {
+    font-size: 11px;
+  }
+  .admin-breakdown-track {
+    height: 6px;
+    margin-top: 8px;
+  }
+  .admin-breakdown-empty {
+    padding: 30px 0;
+    font-size: 14px;
+  }
 }

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+lib/
+deploy_versions/
+.temp/
+.rn_temp/
+.swc/
+.git/
+.mimocode/
+coverage/
+pnpm-lock.yaml
+project.private.config.json

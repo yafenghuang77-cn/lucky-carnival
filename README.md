@@ -60,6 +60,8 @@ config/                        Taro 与 Webpack 环境配置
 
 ## 开发与预览
 
+Node.js 使用 24.x（`package.json#engines` 与 `.nvmrc`），包管理器统一使用 pnpm。完整的格式、目录、跨端开发和提交约定见 [开发约定](CONTRIBUTING.md)。
+
 ```sh
 pnpm install
 pnpm dev:h5
@@ -76,10 +78,12 @@ H5 本地预览通常为 `http://localhost:10086`：
 ```sh
 pnpm build:h5
 pnpm build:weapp
-pnpm exec tsc --noEmit --skipLibCheck --noUnusedParameters false
-pnpm exec eslint src
+pnpm typecheck
+pnpm check
 ```
 
 两个平台默认输出到 `dist/`，请顺序构建。小程序用微信开发者工具打开项目根目录。新增页面后需重启 H5 预览以更新路由。
 
-原始全量 TypeScript 检查存在既有的 Taro 依赖声明及配置未使用参数问题，上述命令保留应用代码检查并跳过依赖声明检查。H5 生产构建存在框架的动态依赖与包体积提示。
+TypeScript 开启严格模式、未使用变量和参数检查；`skipLibCheck` 跳过 Taro/Webpack 的第三方声明检查，应用代码与构建配置仍参与检查。H5 生产构建存在框架的动态依赖与包体积提示。
+
+规范工具所需的完整依赖清单见 [开发约定](CONTRIBUTING.md#开发环境)，由开发者手动安装。ESLint 覆盖 React、Taro、Hooks、TypeScript/JavaScript 和导入顺序，已纳入 `pnpm check` 与提交前检查。编辑器扩展仅提供推荐列表，由开发者自行安装。

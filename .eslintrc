@@ -1,7 +1,242 @@
 {
-  "extends": ["taro/react"],
+  "root": true,
+  "env": {
+    "es2022": true
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "ignorePatterns": [
+    "node_modules/",
+    "dist/",
+    "lib/",
+    "coverage/",
+    "deploy_versions/",
+    ".temp/",
+    ".rn_temp/",
+    ".swc/",
+    ".mimocode/"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
+    "plugin:import/recommended",
+    "taro/rules/jsx",
+    "taro/rules/imports",
+    "taro/rules/variables",
+    "prettier"
+  ],
+  "plugins": ["react", "react-hooks", "import"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/internal-regex": "^@/",
+    "import/core-modules": null,
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "project": "./tsconfig.json"
+      },
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".cjs", ".mjs", ".json"]
+      }
+    }
+  },
   "rules": {
+    "eqeqeq": [
+      "error",
+      "always",
+      {
+        "null": "ignore"
+      }
+    ],
+    "curly": ["error", "all"],
+    "array-callback-return": "error",
+    "no-var": "error",
+    "prefer-const": "error",
+    "object-shorthand": ["error", "always"],
+    "no-eval": "error",
+    "no-implied-eval": "error",
+    "no-new-func": "error",
+    "no-debugger": "error",
+    "no-console": [
+      "error",
+      {
+        "allow": ["warn", "error"]
+      }
+    ],
+    "no-param-reassign": [
+      "error",
+      {
+        "props": false
+      }
+    ],
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }
+    ],
     "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off"
-  }
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-key": [
+      "error",
+      {
+        "checkFragmentShorthand": true
+      }
+    ],
+    "react/jsx-no-useless-fragment": "error",
+    "react/no-array-index-key": "error",
+    "react/no-unstable-nested-components": "error",
+    "react/button-has-type": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error",
+    "import/no-unresolved": [
+      "error",
+      {
+        "ignore": ["\\.(css|less|scss|sass|styl)$"]
+      }
+    ],
+    "import/no-duplicates": "error",
+    "import/no-self-import": "error",
+    "import/no-cycle": [
+      "error",
+      {
+        "ignoreExternal": true,
+        "maxDepth": 3
+      }
+    ],
+    "import/named": "off",
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off",
+    "import/first": ["error", "disable-absolute-first"],
+    "import/newline-after-import": "error",
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling", "index"],
+          "object",
+          "type"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "@/**",
+            "group": "internal"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["builtin", "type"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "warnOnUnassignedImports": false
+      }
+    ],
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true,
+        "allowSeparatedGroups": true
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.{js,jsx,ts,tsx}"],
+      "env": {
+        "browser": true
+      },
+      "rules": {
+        "import/no-nodejs-modules": "error",
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": false
+          }
+        ]
+      }
+    },
+    {
+      "files": ["**/*.{ts,tsx}"],
+      "parser": "@typescript-eslint/parser",
+      "extends": ["plugin:@typescript-eslint/recommended", "plugin:import/typescript"],
+      "rules": {
+        "no-undef": "off",
+        "no-unused-vars": "off",
+        "no-shadow": "off",
+        "no-use-before-define": "off",
+        "react/prop-types": "off",
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/consistent-type-imports": [
+          "error",
+          {
+            "prefer": "type-imports",
+            "fixStyle": "separate-type-imports"
+          }
+        ],
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "argsIgnorePattern": "^_",
+            "caughtErrorsIgnorePattern": "^_",
+            "ignoreRestSiblings": true
+          }
+        ],
+        "@typescript-eslint/no-shadow": "error",
+        "@typescript-eslint/no-use-before-define": [
+          "error",
+          {
+            "functions": false,
+            "classes": false,
+            "variables": false,
+            "typedefs": false
+          }
+        ]
+      }
+    },
+    {
+      "files": ["babel.config.js", "config/**/*.{js,cjs,mjs,ts}"],
+      "env": {
+        "node": true
+      },
+      "rules": {
+        "import/no-commonjs": "off",
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": true
+          }
+        ]
+      }
+    },
+    {
+      "files": ["**/*.d.ts"],
+      "rules": {
+        "@typescript-eslint/no-namespace": "off",
+        "@typescript-eslint/triple-slash-reference": "off",
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": true
+          }
+        ]
+      }
+    }
+  ]
 }

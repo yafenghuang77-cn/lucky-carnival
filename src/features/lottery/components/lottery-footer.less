@@ -1,15 +1,108 @@
-.lottery-bottom { padding: 0 38px calc(32px + env(safe-area-inset-bottom, 0px)); }
-.lottery-note { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 39px 0 28px; font-size: 21px; color: #ffeded; }
-.lottery-note-spark { color: var(--carnival-lime); font-size: 25px; }
-.lottery-links { display: flex; align-items: center; border: 1px solid #ef778c; border-radius: 18px; background: #ca0b2e; padding: 4px 0; }
-.lottery-link { display: flex; justify-content: center; align-items: center; gap: 16px; flex: 1; min-height: 94px; margin: 0; padding: 0 14px; color: var(--carnival-cream); background: transparent; font-size: 25px; }
-.lottery-link-arrow { margin-left: 8px; color: #ffd3dc; font-size: 26px; }
-.lottery-links-divider { height: 31px; width: 1px; background: #e76980; }
-.ticket-mini { width: 29px; height: 22px; border: 2px solid #ffeded; border-radius: 4px; transform: rotate(-12deg); position: relative; }
-.ticket-mini::after { content: ''; position: absolute; border-left: 2px dashed #ffeded; height: 14px; top: 4px; right: 8px; }
-.rules-mini { width: 23px; height: 28px; padding: 6px 4px; box-sizing: border-box; border: 2px solid #ffeded; border-radius: 4px; }
-.rules-mini > view, .rules-mini > taro-view-core, .rules-mini > div { height: 2px; background: #ffeded; margin-bottom: 6px; }
-.lottery-preview { margin: 16px auto 0; min-height: 88px; padding: 0 16px; display: flex; align-items: center; justify-content: center; gap: 14px; background: transparent; color: #fff0f3; font-size: 23px; }
-.lottery-preview[disabled] { background: transparent; color: #f1b6c1; }
-.lottery-footer { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 10px; color: #ffcfda; font-size: 18px; letter-spacing: 5px; }
-.lottery-footer text:last-child { font-size: 17px; letter-spacing: 3px; }
+.lottery-bottom {
+  padding: 0 38px calc(32px + env(safe-area-inset-bottom, 0px));
+}
+.lottery-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 39px 0 28px;
+  font-size: 21px;
+  color: #ffeded;
+}
+.lottery-note-spark {
+  color: var(--carnival-lime);
+  font-size: 25px;
+}
+.lottery-links {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ef778c;
+  border-radius: 18px;
+  background: #ca0b2e;
+  padding: 4px 0;
+}
+.lottery-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-height: 94px;
+  margin: 0;
+  padding: 0 14px;
+  color: var(--carnival-cream);
+  background: transparent;
+  font-size: 25px;
+}
+.lottery-link-arrow {
+  margin-left: 8px;
+  color: #ffd3dc;
+  font-size: 26px;
+}
+.lottery-links-divider {
+  height: 31px;
+  width: 1px;
+  background: #e76980;
+}
+.ticket-mini {
+  width: 29px;
+  height: 22px;
+  border: 2px solid #ffeded;
+  border-radius: 4px;
+  transform: rotate(-12deg);
+  position: relative;
+}
+.ticket-mini::after {
+  content: '';
+  position: absolute;
+  border-left: 2px dashed #ffeded;
+  height: 14px;
+  top: 4px;
+  right: 8px;
+}
+.rules-mini {
+  width: 23px;
+  height: 28px;
+  padding: 6px 4px;
+  box-sizing: border-box;
+  border: 2px solid #ffeded;
+  border-radius: 4px;
+}
+.rules-mini > view,
+.rules-mini > taro-view-core,
+.rules-mini > div {
+  height: 2px;
+  background: #ffeded;
+  margin-bottom: 6px;
+}
+.lottery-preview {
+  margin: 16px auto 0;
+  min-height: 88px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: transparent;
+  color: #fff0f3;
+  font-size: 23px;
+}
+.lottery-preview[disabled] {
+  background: transparent;
+  color: #f1b6c1;
+}
+.lottery-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  color: #ffcfda;
+  font-size: 18px;
+  letter-spacing: 5px;
+}
+.lottery-footer text:last-child {
+  font-size: 17px;
+  letter-spacing: 3px;
+}

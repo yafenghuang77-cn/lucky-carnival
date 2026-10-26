@@ -1,14 +1,26 @@
 import Taro from '@tarojs/taro'
-import { WinRecord } from '../types/lottery'
+
 import { shanghaiDay } from '../utils/date'
-import { PrizeVoucher } from '../types/redemption'
+
+import type { WinRecord } from '../types/lottery'
+import type { PrizeVoucher } from '../types/redemption'
 
 const KEY = 'carnival_demo_vouchers_v1'
 
 export function getDemoVouchers(): PrizeVoucher[] {
   const saved: unknown = Taro.getStorageSync(KEY)
-  if (!Array.isArray(saved)) return []
-  return saved.filter((item): item is PrizeVoucher => Boolean(item && typeof item.id === 'string' && typeof item.prizeName === 'string' && typeof item.code === 'string' && typeof item.expiresAt === 'string'))
+  if (!Array.isArray(saved)) {
+    return []
+  }
+  return saved.filter((item): item is PrizeVoucher =>
+    Boolean(
+      item &&
+      typeof item.id === 'string' &&
+      typeof item.prizeName === 'string' &&
+      typeof item.code === 'string' &&
+      typeof item.expiresAt === 'string',
+    ),
+  )
 }
 
 export function saveDemoVoucher(record: WinRecord, endTime: string): PrizeVoucher {
@@ -24,10 +36,12 @@ export function saveDemoVoucher(record: WinRecord, endTime: string): PrizeVouche
 
 const DRAW_DAY_KEY = 'carnival_demo_last_draw_day_v1'
 
-export const getDemoRemaining = () => Taro.getStorageSync(DRAW_DAY_KEY) === shanghaiDay() ? 0 : 1
+export const getDemoRemaining = () => (Taro.getStorageSync(DRAW_DAY_KEY) === shanghaiDay() ? 0 : 1)
 
 export function consumeDemoChance(): boolean {
-  if (getDemoRemaining() === 0) return false
+  if (getDemoRemaining() === 0) {
+    return false
+  }
   Taro.setStorageSync(DRAW_DAY_KEY, shanghaiDay())
   return true
 }

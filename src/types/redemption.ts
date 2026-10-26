@@ -1,4 +1,4 @@
-import { PrizeKind, WinRecord } from './lottery'
+import type { PrizeKind, WinRecord } from './lottery'
 
 export type PrizeVoucher = WinRecord & {
   code: string

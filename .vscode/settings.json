@@ -1,0 +1,31 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
+  },
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "files.associations": {
+    ".eslintrc": "json",
+    ".prettierrc": "json",
+    ".stylelintrc": "json",
+    ".commitlintrc": "json",
+    ".lintstagedrc": "json"
+  },
+  "[markdown]": {
+    "files.trimTrailingWhitespace": false
+  },
+  "prettier.requireConfig": true,
+  "stylelint.validate": ["css", "less"],
+  "css.validate": false,
+  "less.validate": false,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
+}

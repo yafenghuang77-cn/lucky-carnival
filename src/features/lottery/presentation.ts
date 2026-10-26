@@ -1,4 +1,4 @@
-import { Prize, PrizeKind, WinRecord } from '../../types/lottery'
+import type { Prize, PrizeKind, WinRecord } from '../../types/lottery'
 
 const PRESENTATION: Record<string, { kind: PrizeKind; hint: string; value?: string }> = {
   p1: { kind: 'phone', hint: '人气大奖' },
@@ -11,7 +11,8 @@ const PRESENTATION: Record<string, { kind: PrizeKind; hint: string; value?: stri
   p8: { kind: 'shipping', hint: '好物包邮到家' },
 }
 
-export const getPrizePresentation = (prize: Prize) => PRESENTATION[prize.id] || { kind: 'coupon' as PrizeKind, hint: prize.name }
+export const getPrizePresentation = (prize: Prize) =>
+  PRESENTATION[prize.id] || { kind: 'coupon' as PrizeKind, hint: prize.name }
 
 export function makeWinRecord(prize: Prize): WinRecord {
   const { kind, hint, value } = getPrizePresentation(prize)

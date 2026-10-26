@@ -1,14 +1,99 @@
-.lottery-machine { position: relative; margin: 0 30px; padding: 0 22px 14px; background: var(--carnival-cream); border: 2px solid #f3dfd5; border-radius: 32px; box-shadow: 0 12px 0 #ab0727, 0 18px 0 rgba(103, 1, 25, 0.2); }
-.machine-topline { display: flex; justify-content: center; align-items: center; gap: 19px; height: 78px; color: #8d6f70; font-size: 23px; letter-spacing: 5px; }
-.machine-line { width: 40px; height: 1px; background: #dfc9c7; }
-.lottery-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.lottery-go { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0; padding: 12px 2px; min-width: 0; width: 100%; border: 2px solid #161414; border-radius: 18px; background: #252223; color: var(--carnival-cream); box-shadow: 0 6px 0 #100e0e; line-height: 1; transition: background 150ms, transform 150ms; }
-.lottery-go:active:not([disabled]) { transform: translateY(3px); }
-.lottery-go[disabled] { color: #faf4f3; background: #a28b8e; border-color: #a28b8e; box-shadow: 0 6px 0 #8c7578; }
-.lottery-go-title { font-size: 72px; font-weight: 900; letter-spacing: 1px; font-family: 'Arial Black', 'Arial', sans-serif; }
-.lottery-go-title--rolling, .lottery-go[disabled] .lottery-go-title { font-size: 33px; }
-.lottery-go-label { margin-top: 10px; font-size: 20px; }
-.lottery-go-arrow { margin-top: 12px; color: var(--carnival-lime); font-size: 32px; line-height: 1; }
-.machine-bottom { display: flex; justify-content: center; gap: 7px; padding: 3px 0 1px; }
-.machine-bottom > view, .machine-bottom > taro-view-core, .machine-bottom > div { width: 5px; height: 5px; border-radius: 50%; background: #d9bfba; }
-@media (prefers-reduced-motion: reduce) { .lottery-go { transition: none; } }
+.lottery-machine {
+  position: relative;
+  margin: 0 30px;
+  padding: 0 22px 14px;
+  background: var(--carnival-cream);
+  border: 2px solid #f3dfd5;
+  border-radius: 32px;
+  box-shadow:
+    0 12px 0 #ab0727,
+    0 18px 0 rgba(103, 1, 25, 0.2);
+}
+.machine-topline {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 19px;
+  height: 78px;
+  color: #8d6f70;
+  font-size: 23px;
+  letter-spacing: 5px;
+}
+.machine-line {
+  width: 40px;
+  height: 1px;
+  background: #dfc9c7;
+}
+.lottery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.lottery-go {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 12px 2px;
+  min-width: 0;
+  width: 100%;
+  border: 2px solid #161414;
+  border-radius: 18px;
+  background: #252223;
+  color: var(--carnival-cream);
+  box-shadow: 0 6px 0 #100e0e;
+  line-height: 1;
+  transition:
+    background 150ms,
+    transform 150ms;
+}
+.lottery-go:active:not([disabled]) {
+  transform: translateY(3px);
+}
+.lottery-go[disabled] {
+  color: #faf4f3;
+  background: #a28b8e;
+  border-color: #a28b8e;
+  box-shadow: 0 6px 0 #8c7578;
+}
+.lottery-go-title {
+  font-size: 72px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  font-family: 'Arial Black', Arial, sans-serif;
+}
+.lottery-go-title--rolling,
+.lottery-go[disabled] .lottery-go-title {
+  font-size: 33px;
+}
+.lottery-go-label {
+  margin-top: 10px;
+  font-size: 20px;
+}
+.lottery-go-arrow {
+  margin-top: 12px;
+  color: var(--carnival-lime);
+  font-size: 32px;
+  line-height: 1;
+}
+.machine-bottom {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  padding: 3px 0 1px;
+}
+.machine-bottom > view,
+.machine-bottom > taro-view-core,
+.machine-bottom > div {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #d9bfba;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lottery-go {
+    transition: none;
+  }
+}
