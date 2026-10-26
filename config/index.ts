@@ -58,6 +58,10 @@ export default defineConfig<'webpack5'>(async (merge, { mode }) => {
       },
     },
     mini: {
+      compile: {
+        // Zod 发布源码含可选链等新语法，发布构建也需要通过 Babel 转译。
+        include: [(filename: string) => /[\\/]node_modules[\\/]zod[\\/]/.test(filename)],
+      },
       postcss: {
         pxtransform: {
           enable: true,

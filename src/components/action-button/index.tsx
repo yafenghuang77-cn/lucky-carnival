@@ -23,14 +23,14 @@ export default function ActionButton({
   const { animation, animate } = useTaroAnimation()
   const press = () => {
     if (!disabled) {
-      animate((value) => value.opacity(0.88), 80)
+      animate((value) => value.opacity(0.88).scale(0.97), 80)
     }
   }
-  const release = () => animate((value) => value.opacity(1), 100)
+  const release = () => animate((value) => value.opacity(1).scale(1), 100)
 
   useEffect(() => {
     if (disabled) {
-      animate((value) => value.opacity(1), 0)
+      animate((value) => value.opacity(1).scale(1), 0)
     }
   }, [animate, disabled])
 

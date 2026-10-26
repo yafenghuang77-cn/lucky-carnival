@@ -2,6 +2,7 @@ import { Input, Picker, Text, View } from '@tarojs/components'
 import { useMemo, useState } from 'react'
 
 import ActionButton from '@/components/action-button'
+import MotionView from '@/components/motion-view'
 import AdminLogin from '@/features/admin/components/admin-login'
 import PrizeBreakdown from '@/features/admin/components/prize-breakdown'
 import RecordsList from '@/features/admin/components/records-list'
@@ -59,7 +60,7 @@ export default function Admin() {
           退出预览 <Text>↗</Text>
         </ActionButton>
       </View>
-      <View className='admin-main'>
+      <MotionView className='admin-main'>
         <View className='admin-title-row'>
           <View>
             <Text className='admin-eyebrow'>A GOOD DAY, IN NUMBERS</Text>
@@ -149,7 +150,7 @@ export default function Admin() {
           </Text>
         </View>
         <Text className='admin-footer'>LUCKY CARNIVAL · 把好礼送到每一个人手中</Text>
-      </View>
+      </MotionView>
     </View>
   )
 }

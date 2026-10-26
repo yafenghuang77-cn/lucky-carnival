@@ -10,9 +10,10 @@
   box-sizing: border-box;
 }
 .win-modal-scrim {
+  opacity: 0;
   position: fixed;
   inset: 0;
-  background: rgba(39, 12, 17, 0.76);
+  background: rgba(48, 13, 20, 0.8);
 }
 .win-modal-dialog {
   position: relative;
@@ -28,6 +29,7 @@
   position: relative;
   border-radius: 32px;
   background: var(--carnival-cream);
+  border: 2px solid #ebc88c;
   overflow: hidden;
   box-shadow: 0 28px 100px rgba(39, 9, 17, 0.3);
 }
@@ -36,16 +38,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: radial-gradient(ellipse at 50% 50%, #ffe9e2 0%, #fffaf2 68%);
+  background: radial-gradient(ellipse at 50% 45%, #f7e5bd 0%, #fff8e9 70%);
 }
 .win-eyebrow {
-  color: #967275;
+  color: #8e6b43;
   font-size: 18px;
   letter-spacing: 4px;
 }
 .win-title {
   display: block;
   font-size: 52px;
+  font-family: 'Songti SC', STSong, serif;
   font-weight: 900;
   color: var(--carnival-primary);
   letter-spacing: 1px;
@@ -72,15 +75,15 @@
   width: 210px;
   height: 210px;
   border-radius: 50%;
-  border: 1px solid #f0d5cf;
+  border: 1px solid #e4c285;
   box-shadow:
-    0 0 0 20px rgba(242, 207, 196, 0.25),
-    0 0 0 40px rgba(242, 207, 196, 0.16);
+    0 0 0 20px rgba(234, 201, 142, 0.25),
+    0 0 0 40px rgba(234, 201, 142, 0.16);
 }
 .win-art-spark {
   position: absolute;
   font-size: 50px;
-  color: #d74055;
+  color: #b52630;
 }
 .win-art-spark--left {
   left: 65px;
@@ -91,7 +94,7 @@
   right: 75px;
   bottom: 30px;
   font-size: 32px;
-  color: #ad8735;
+  color: #a5742f;
 }
 .win-prize-label {
   display: block;
@@ -123,7 +126,7 @@
   gap: 16px;
   margin: 2px 0 0;
   padding: 0 32px;
-  color: #b79592;
+  color: #8c6b40;
   font-size: 16px;
   letter-spacing: 4px;
 }
@@ -131,7 +134,7 @@
 .win-ticket-divider > taro-view-core,
 .win-ticket-divider > div {
   flex: 1;
-  border-top: 2px dashed #e4cbc5;
+  border-top: 2px dashed #dec38f;
 }
 .win-ticket-divider::before,
 .win-ticket-divider::after {
@@ -141,7 +144,7 @@
   height: 27px;
   top: 50%;
   border-radius: 50%;
-  background: #54202b;
+  background: #50202a;
   transform: translateY(-50%);
 }
 .win-ticket-divider::before {
@@ -161,7 +164,7 @@
   height: 88px;
   width: 88px;
   border-radius: 50%;
-  border: 2px solid #e3adb8;
+  border: 2px solid #e6c493;
   background: transparent;
 }
 .win-close-button > view,

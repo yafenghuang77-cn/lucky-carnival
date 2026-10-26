@@ -1,33 +1,49 @@
 .lottery-machine {
   position: relative;
-  margin: 0 30px;
-  padding: 0 22px 14px;
-  background: var(--carnival-cream);
-  border: 2px solid #f3dfd5;
-  border-radius: 32px;
+  margin: 0 28px;
+  padding: 0 20px 12px;
+  background: linear-gradient(135deg, #f6d99f, #e9be79 50%, #f8e1b4);
+  border: 2px solid #ffe4ad;
+  border-radius: 30px;
   box-shadow:
-    0 12px 0 #ab0727,
-    0 18px 0 rgba(103, 1, 25, 0.2);
+    0 7px 0 #8a3a2a,
+    0 16px 32px rgba(69, 14, 24, 0.25);
 }
 .machine-topline {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 19px;
-  height: 78px;
-  color: #8d6f70;
+  gap: 18px;
+  height: 72px;
+  color: #7e3f2a;
   font-size: 23px;
-  letter-spacing: 5px;
+  font-weight: 600;
+  letter-spacing: 4px;
 }
 .machine-line {
   width: 40px;
   height: 1px;
-  background: #dfc9c7;
+  background: #b88043;
+  position: relative;
+}
+.machine-line::after {
+  content: '';
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  top: -3px;
+  left: 16px;
+  background: #a56b34;
+  transform: rotate(45deg);
 }
 .lottery-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
+  padding: 12px;
+  background: #a94637;
+  border-radius: 20px;
+  border: 1px solid #b46f43;
 }
 .lottery-go {
   position: relative;
@@ -39,50 +55,52 @@
   padding: 12px 2px;
   min-width: 0;
   width: 100%;
-  border: 2px solid #161414;
-  border-radius: 18px;
-  background: #252223;
-  color: var(--carnival-cream);
-  box-shadow: 0 6px 0 #100e0e;
+  border: 2px solid #ffe2a3;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #ffe4ac, #edbd6c);
+  color: #832332;
+  box-shadow:
+    0 5px 0 #cc8d49,
+    inset 0 0 0 5px rgba(255, 244, 210, 0.45);
   line-height: 1;
 }
 .lottery-go[disabled] {
-  color: #faf4f3;
-  background: #a28b8e;
-  border-color: #a28b8e;
-  box-shadow: 0 6px 0 #8c7578;
+  color: #704a3b;
+  background: #e0c39b;
+  border-color: #efd8b8;
+  box-shadow: 0 5px 0 #ac7957;
 }
 .lottery-go-title {
-  font-size: 72px;
+  font-size: 64px;
   font-weight: 900;
   letter-spacing: 1px;
   font-family: 'Arial Black', Arial, sans-serif;
 }
 .lottery-go-title--rolling,
 .lottery-go[disabled] .lottery-go-title {
-  font-size: 33px;
+  font-size: 32px;
 }
 .lottery-go-label {
   margin-top: 10px;
   font-size: 20px;
+  font-weight: 600;
 }
 .lottery-go-arrow {
-  margin-top: 12px;
-  color: var(--carnival-lime);
-  font-size: 32px;
+  margin-top: 13px;
+  color: #9d5433;
+  font-size: 29px;
   line-height: 1;
 }
 .machine-bottom {
   display: flex;
   justify-content: center;
-  gap: 7px;
-  padding: 3px 0 1px;
+  gap: 8px;
+  padding: 0 0 4px;
 }
 .machine-bottom > view,
-.machine-bottom > taro-view-core,
-.machine-bottom > div {
+.machine-bottom > taro-view-core {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #d9bfba;
+  background: #b58248;
 }

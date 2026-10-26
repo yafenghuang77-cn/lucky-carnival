@@ -1,6 +1,7 @@
 import { View } from '@tarojs/components'
 import { navigateTo } from '@tarojs/taro'
 
+import MotionView from '@/components/motion-view'
 import WinModal from '@/components/win-modal'
 import ActivityHero from '@/features/lottery/components/activity-hero'
 import LotteryBoard from '@/features/lottery/components/lottery-board'
@@ -20,7 +21,7 @@ export default function Lottery() {
 
   return (
     <View className='lottery-page'>
-      <View className='lottery-content'>
+      <MotionView className='lottery-content'>
         <ActivityHero
           title={activity.title}
           startTime={activity.startTime}
@@ -39,7 +40,7 @@ export default function Lottery() {
           onRules={showRules}
           onPreview={lottery.previewWin}
         />
-      </View>
+      </MotionView>
       <WinModal
         visible={lottery.winVisible}
         record={lottery.winRecord}

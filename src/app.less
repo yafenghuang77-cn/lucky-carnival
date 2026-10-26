@@ -1,11 +1,19 @@
+@import './components/festival-seal/index.less';
+
 page,
 body {
-  --carnival-primary: #e4002b;
-  --carnival-cream: #fffaf2;
-  --carnival-lime: #ffdf91;
-  --carnival-ink: #252223;
-  --carnival-muted: #74686a;
-  background: var(--carnival-primary);
+  --carnival-primary: #b52630;
+  --carnival-deep: #851e2b;
+  --carnival-cream: #fff8e9;
+  --carnival-lime: #f8d995;
+  --carnival-gold: #f8d995;
+  --carnival-ink: #482b28;
+  --carnival-muted: #80665b;
+  --carnival-border: #e8cfa8;
+  --carnival-backdrop:
+    radial-gradient(ellipse at 90% 5%, rgba(255, 190, 97, 0.15), transparent 45%),
+    linear-gradient(160deg, #bd3035 0%, #a32130 55%, #801e2b 100%);
+  background: var(--carnival-deep);
   font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   -webkit-font-smoothing: antialiased;
 }

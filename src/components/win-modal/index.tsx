@@ -1,9 +1,9 @@
 import { Text, View } from '@tarojs/components'
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 import ActionButton from '@/components/action-button'
 import PrizeArt from '@/components/prize-art'
-import useTaroAnimation from '@/hooks/use-taro-animation'
+import useTaroAnimation, { prefersReducedMotion } from '@/hooks/use-taro-animation'
 
 import type { WinRecord } from '@/types/lottery'
 
@@ -26,16 +26,42 @@ export default function WinModal({ visible, record, onClose }: Props) {
 
 function WinModalContent({ record, onClose }: { record: WinRecord; onClose: () => void }) {
   const { animation, animate } = useTaroAnimation()
+  const { animation: scrimAnimation, animate: animateScrim } = useTaroAnimation()
+  const closingRef = useRef(false)
+  const exitTimer = useRef<ReturnType<typeof setTimeout>>()
+  const entranceTimer = useRef<ReturnType<typeof setTimeout>>()
   const closeRef = useRef(onClose)
   closeRef.current = onClose
 
+  const requestClose = useCallback(() => {
+    if (closingRef.current) {
+      return
+    }
+    closingRef.current = true
+    clearTimeout(entranceTimer.current)
+    if (prefersReducedMotion()) {
+      closeRef.current()
+      return
+    }
+    animate((motion) => motion.opacity(0).translateY(12).scale(0.98), 180)
+    animateScrim((motion) => motion.opacity(0), 180)
+    exitTimer.current = setTimeout(() => closeRef.current(), 180)
+  }, [animate, animateScrim])
+
   useEffect(() => {
     // Let the initial pose render before starting the entrance on either platform.
-    const timer = setTimeout(() => {
-      animate((motion) => motion.opacity(1).translateY(0).scale(1), 300)
-    }, 32)
-    return () => clearTimeout(timer)
-  }, [animate])
+    entranceTimer.current = setTimeout(
+      () => {
+        animate((motion) => motion.opacity(1).translateY(0).scale(1), 280)
+        animateScrim((motion) => motion.opacity(1), 220)
+      },
+      prefersReducedMotion() ? 0 : 32,
+    )
+    return () => {
+      clearTimeout(entranceTimer.current)
+      clearTimeout(exitTimer.current)
+    }
+  }, [animate, animateScrim])
 
   useEffect(() => {
     if (process.env.TARO_ENV !== 'h5') {
@@ -55,7 +81,7 @@ function WinModalContent({ record, onClose }: { record: WinRecord; onClose: () =
     const focusTimer = setTimeout(() => dialog?.focus({ preventScroll: true }), 32)
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        closeRef.current()
+        requestClose()
       }
       if (event.key !== 'Tab') {
         return
@@ -84,13 +110,18 @@ function WinModalContent({ record, onClose }: { record: WinRecord; onClose: () =
       document.removeEventListener('keydown', onKeyDown)
       previousFocus?.focus()
     }
-  }, [])
+  }, [requestClose])
 
   const isWin = record.isWin !== false
 
   return (
     <View className='win-modal-root' catchMove>
-      <View className='win-modal-scrim' aria-hidden onClick={onClose} />
+      <View
+        className='win-modal-scrim'
+        animation={scrimAnimation}
+        aria-hidden
+        onClick={requestClose}
+      />
       <View
         className={`win-modal-dialog${isWin ? '' : ' win-modal-dialog--thanks'}`}
         animation={animation}
@@ -146,7 +177,11 @@ function WinModalContent({ record, onClose }: { record: WinRecord; onClose: () =
             </Text>
           </View>
         </View>
-        <ActionButton className='win-close-button' aria-label='关闭抽奖结果弹窗' onClick={onClose}>
+        <ActionButton
+          className='win-close-button'
+          aria-label='关闭抽奖结果弹窗'
+          onClick={requestClose}
+        >
           <View />
           <View />
         </ActionButton>

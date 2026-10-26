@@ -2,130 +2,106 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 28px 40px 0;
+  gap: 16px;
+  padding: 30px 34px 0;
 }
 .lottery-brand {
-  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 12px;
   font-size: 26px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 2px;
 }
 .brand-flower {
-  color: var(--carnival-lime);
-  font-size: 47px;
-  line-height: 1;
-}
-.lottery-rule-button {
-  width: auto;
-  flex-shrink: 0;
-  white-space: nowrap;
-  margin: 0;
-  padding: 0 0 0 20px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  min-height: 88px;
-  background: transparent;
-  color: var(--carnival-cream);
-  font-size: 24px;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(248, 217, 149, 0.65);
+  border-radius: 14px;
+  color: var(--carnival-gold);
+  font-size: 37px;
+  line-height: 1;
 }
-.lottery-rule-button text {
-  font-size: 30px;
+.lottery-edition {
+  padding: 8px 18px;
+  border: 1px solid rgba(248, 217, 149, 0.45);
+  border-radius: 30px;
+  color: var(--carnival-gold);
+  font-size: 20px;
+  letter-spacing: 2px;
 }
 .lottery-hero {
   position: relative;
-  padding: 34px 48px 42px;
+  padding: 36px 42px 32px;
 }
 .hero-eyebrow {
-  position: relative;
-  z-index: 1;
-  font-size: 18px;
-  letter-spacing: 5px;
-  color: #ffe6e9;
+  font-size: 16px;
+  letter-spacing: 4px;
+  color: var(--carnival-gold);
 }
-.hero-heading {
-  position: relative;
-  z-index: 1;
-  margin-top: 19px;
-  display: flex;
-  flex-direction: column;
-  font-size: 80px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  line-height: 1.15;
-}
-.hero-heading-last {
+.lottery-hero-main {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
+  margin-top: 20px;
 }
-.hero-heading-star {
-  color: var(--carnival-lime);
-  font-size: 90px;
-  font-weight: 400;
-  line-height: 1;
+.hero-heading {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  font-family: 'Songti SC', STSong, serif;
+  font-size: 72px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  line-height: 1.2;
+}
+.hero-heading-last {
+  color: var(--carnival-gold);
 }
 .hero-description {
-  position: relative;
-  z-index: 1;
   display: block;
-  margin-top: 22px;
-  color: #fff3f3;
-  font-size: 25px;
+  margin-top: 18px;
+  color: #ffe7c5;
+  font-size: 24px;
   letter-spacing: 2px;
 }
 .hero-date {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 22px;
+  margin-top: 20px;
   font-size: 20px;
-  color: #ffe6e9;
+  color: #f6dcba;
   font-variant-numeric: tabular-nums;
   letter-spacing: 1px;
 }
 .hero-date-dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: var(--carnival-lime);
+  background: var(--carnival-gold);
 }
-.hero-orbit {
-  position: absolute;
-  width: 310px;
-  height: 310px;
-  right: -125px;
-  top: 15px;
-  border: 1px solid rgba(255, 234, 238, 0.22);
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 35px rgba(255, 234, 238, 0.035),
-    0 0 0 70px rgba(255, 234, 238, 0.025);
+.lottery-hero .festival-seal {
+  position: static;
+  flex-shrink: 0;
+  margin: 14px;
+  width: 144px;
+  height: 144px;
 }
-.hero-spark {
-  position: absolute;
-  font-weight: 400;
-}
-.hero-spark-one {
-  right: 85px;
-  top: 68px;
-  font-size: 78px;
-  color: #ffb8c3;
-  transform: rotate(10deg);
-}
-.hero-spark-two {
-  right: 28px;
-  bottom: 72px;
-  font-size: 31px;
-  color: var(--carnival-lime);
-}
-.lottery-rule-button::after,
-.lottery-go::after,
-.lottery-signin::after,
-.lottery-link::after,
-.lottery-preview::after {
-  border: none;
+
+@media (max-width: 350px) {
+  .hero-heading {
+    font-size: 60px;
+  }
+  .lottery-hero .festival-seal {
+    width: 124px;
+    height: 124px;
+  }
+  .lottery-hero .festival-seal-character {
+    font-size: 68px;
+  }
 }

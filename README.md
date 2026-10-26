@@ -18,6 +18,7 @@ src/
     prizes/components/         VoucherCard 奖券卡片
     admin/components/          AdminLogin、SummaryCards、RecordsList、PrizeBreakdown
   components/
+    motion-view/               跨端内容入场过渡
     action-button/             统一 Taro 按钮，包含 H5 键盘支持
     prize-art/                 可复用 CSS 奖品插画
     prize-card/                九宫格奖品卡片
@@ -37,13 +38,13 @@ config/                        Taro 与 Webpack 环境配置
 
 ## UI 设计
 
-参考 KFC 红白黑配色：红 `#E4002B`、奶油白 `#FFFAF2`、炭黑 `#252223`、金色 `#FFDF91`。九宫格采用票券式框架和统一的 CSS 奖品插画；中央 GO 是主操作。
+采用红金节日配色：朱红 `#B52630`、深红 `#851E2B`、奶油白 `#FFF8E9`、金色 `#F8D995`。首页以福字印章、奖券卡片和金色主按钮突出活动；我的奖品、玩法为次级入口，门店管理收纳在页尾。九宫格采用金色框架和统一的 CSS 奖品插画；中央 GO 是主操作。标题使用系统宋体，正文使用系统无衬线字体，无需加载远程字体。
 
 中奖弹窗展示对应奖品、中奖文案、虚线票券装饰，只保留关闭图标。未中奖使用独立的四叶草画面和文案。H5 支持 Escape 关闭、焦点约束、减少动态效果偏好。
 
 页面和组件统一使用 `@tarojs/components`，ESLint 禁止 JSX 中的原生 HTML 标签。`src/index.html` 是 H5 构建所需的宿主模板，保留 HTML 文档结构和挂载节点。
 
-弹窗入场、奖品格缩放和按钮按压反馈统一使用 `Taro.createAnimation` 与组件的 `animation` 属性，H5 和微信小程序共用实现，无需安装动画插件。抽奖格子的顺时针顺序与减速节奏由抽奖 Hook 的计时器控制；奖品背景和边框通过激活态类名切换。
+页面内容采用 280ms 淡入上移，奖品筛选采用 180ms 内容过渡；中奖弹窗支持入场及 180ms 退场，关闭后恢复焦点。页面入场、弹窗出入场、奖品格缩放和按钮按压反馈统一使用 `Taro.createAnimation` 与组件的 `animation` 属性，H5 和微信小程序共用实现，无需安装动画插件。抽奖格子的顺时针顺序与减速节奏由抽奖 Hook 的计时器控制；奖品背景和边框通过激活态类名切换。
 
 ## 每日抽奖规则
 
@@ -100,6 +101,8 @@ pnpm build:weapp
 pnpm typecheck
 pnpm check
 ```
+
+微信开发者工具上传前，先停止 `pnpm dev:weapp` 等小程序监听进程，再运行 `pnpm build:weapp`，最后在开发者工具中重新编译并上传。开发监听产物包含未压缩的预编译依赖和调试文件，可能超过主包 2MB 限制；不要直接上传开发产物，也不要通过忽略 `prebundle/` 来缩包，该目录在开发构建中属于运行依赖。开发与发布构建共用输出目录，上传前不要重新启动开发监听，以免生产包被覆盖。
 
 各平台保留独立目录，并在里面按 `TARO_APP_ROUTER_BASENAME` 创建产物子目录。当前值为 `/lucky-carnival`，H5 输出到 `dist/h5/lucky-carnival/`，微信小程序输出到 `dist/weapp/lucky-carnival/`，其他平台同样输出到 `dist/<平台>/lucky-carnival/`。小程序用微信开发者工具打开项目根目录，`project.config.json` 已指向 `dist/weapp/lucky-carnival/`。新增页面后需重启 H5 预览以更新路由。
 
