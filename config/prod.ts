@@ -1,8 +1,11 @@
 import type { UserConfigExport } from '@tarojs/cli'
 
 export default {
-  mini: {},
+  mini: {
+    enableSourceMap: false,
+  },
   h5: {
+    enableSourceMap: false,
     publicPath: process.env.TARO_APP_PUBLIC_PATH || '/lucky-carnival/',
     router: {
       mode: 'hash',

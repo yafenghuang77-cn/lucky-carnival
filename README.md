@@ -73,6 +73,16 @@ pnpm dev:h5
 pnpm dev:weapp
 ```
 
+按环境启动时使用对应命令：
+
+| 环境         | H5 启动            | 微信小程序监听编译    | 环境文件           | 配置文件         |
+| ------------ | ------------------ | --------------------- | ------------------ | ---------------- |
+| 开发         | `pnpm dev:h5`      | `pnpm dev:weapp`      | `.env.development` | `config/dev.ts`  |
+| 测试         | `pnpm dev:h5:test` | `pnpm dev:weapp:test` | `.env.test`        | `config/dev.ts`  |
+| 生产配置预览 | `pnpm dev:h5:prod` | `pnpm dev:weapp:prod` | `.env.production`  | `config/prod.ts` |
+
+H5 启动命令提供本地预览服务，小程序命令持续监听编译并配合微信开发者工具预览。测试环境启动使用开发构建以便调试，加载测试环境变量；生产配置预览使用生产压缩配置。切换环境时先停止当前进程，再执行对应命令；生产发布仍执行下面的 `build` 命令。
+
 H5 本地预览通常为 `http://localhost:10086/lucky-carnival/#/lucky-carnival/index`：
 
 - `/lucky-carnival/#/lucky-carnival/index`：活动入口
@@ -104,10 +114,14 @@ TypeScript 开启严格模式、未使用变量和参数检查；`skipLibCheck` 
 | 命令                                           | 环境文件           | 构建方式                   |
 | ---------------------------------------------- | ------------------ | -------------------------- |
 | `pnpm dev:h5` / `pnpm dev:weapp`               | `.env.development` | 开发模式，监听文件变化     |
+| `pnpm dev:h5:test` / `pnpm dev:weapp:test`     | `.env.test`        | 开发模式，监听文件变化     |
+| `pnpm dev:h5:prod` / `pnpm dev:weapp:prod`     | `.env.production`  | 生产模式，监听文件变化     |
 | `pnpm build:h5:test` / `pnpm build:weapp:test` | `.env.test`        | 生产模式，使用测试环境变量 |
 | `pnpm build:h5` / `pnpm build:weapp`           | `.env.production`  | 生产模式，使用生产环境变量 |
 
-`--mode test` 只选择环境变量文件，不将 `NODE_ENV` 改为 `test`；测试环境仍使用 `config/prod.ts` 的压缩配置。不同环境的同平台构建共用输出目录，切换环境后会覆盖该平台的产物。
+命令通过 `--env` 指定构建方式，通过 `--mode` 选择环境变量文件；`NODE_ENV` 保持为 `development` 或 `production`。`dev:*:test` 使用 `config/dev.ts` 调试测试环境，`build:*:test` 使用 `config/prod.ts` 生成测试环境的发布产物。不同环境的同平台构建共用输出目录，切换环境后会覆盖该平台的产物。
+
+Source Map 在 `config/dev.ts` 的 H5、小程序配置中显式开启，方便本地调试；在 `config/prod.ts` 中显式关闭。因此 `build:h5`、`build:weapp` 及其 `:test` 构建均不生成 Source Map，`dev:*:prod` 的生产配置预览也不生成。微信开发者工具配置同时关闭 `uploadWithSourceMap`。
 
 - `TARO_APP_PUBLIC_PATH`：H5 资源部署路径，开发、测试、生产环境均已设为 `/lucky-carnival/`。将 `dist/h5/` 的内容部署到站点的 `/lucky-carnival/` 目录；部署到其他目录时修改此变量，部署到域名根目录时设为 `/`。
 - `TARO_APP_ROUTER_BASENAME`：H5 页面路由前缀，开发、测试、生产环境均已设为 `/lucky-carnival`。当前使用 hash 路由，配合默认资源部署路径和 `customRoutes`，首页地址为 `/lucky-carnival/#/lucky-carnival/index`；设为 `/` 可移除 `#` 后的路由前缀。

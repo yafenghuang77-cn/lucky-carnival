@@ -5,8 +5,11 @@ export default {
     quiet: false,
     stats: true,
   },
-  mini: {},
+  mini: {
+    enableSourceMap: true,
+  },
   h5: {
+    enableSourceMap: true,
     publicPath: process.env.TARO_APP_PUBLIC_PATH || '/lucky-carnival/',
     router: {
       mode: 'hash',
